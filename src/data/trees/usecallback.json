@@ -1,0 +1,139 @@
+{
+  "id": "usecallback-tree",
+  "title": "useCallback Interview Tree",
+  "summary": "This interview tree maps how technical conversations about useCallback typically flow. Each branch represents a natural follow-up based on the candidate's response depth and accuracy.",
+  "root": "What is useCallback and when would you use it?",
+  "branches": [
+    {
+      "id": "root",
+      "q": "What is useCallback and when would you use it?",
+      "intent": "Basic understanding check - do they know memoization concept?",
+      "signal": "Mentions function memoization, referential equality, performance context",
+      "metadata": {
+        "difficulty": "easy",
+        "depth": 0
+      }
+    },
+    {
+      "id": "performance-impact",
+      "q": "Can useCallback make performance worse?",
+      "intent": "Deep performance understanding - do they know the overhead?",
+      "signal": "Mentions closure overhead, unnecessary memoization, dependency checking cost",
+      "parent": "root",
+      "metadata": {
+        "difficulty": "medium",
+        "trigger": "If they mention performance benefits",
+        "depth": 1
+      }
+    },
+    {
+      "id": "memory-tradeoff",
+      "q": "How does useCallback affect garbage collection?",
+      "intent": "Advanced memory management knowledge",
+      "signal": "Discusses closure retention, memory leaks, reference holding",
+      "parent": "performance-impact",
+      "metadata": {
+        "difficulty": "hard",
+        "trigger": "Strong performance understanding shown",
+        "depth": 2
+      }
+    },
+    {
+      "id": "dependency-array",
+      "q": "What happens if you omit the dependency array?",
+      "intent": "Understanding React hooks rules and stale closures",
+      "signal": "Explains stale closures, ESLint exhaustive-deps rule, infinite loops",
+      "parent": "root",
+      "metadata": {
+        "difficulty": "easy",
+        "trigger": "Basic understanding confirmed",
+        "depth": 1
+      }
+    },
+    {
+      "id": "stale-closure",
+      "q": "Debug this: useCallback returns stale values",
+      "intent": "Practical debugging skills with closures",
+      "signal": "Identifies missing dependencies, suggests fixes, explains closure scope",
+      "parent": "dependency-array",
+      "metadata": {
+        "difficulty": "medium",
+        "trigger": "If they understand dependency arrays",
+        "depth": 2
+      }
+    },
+    {
+      "id": "vs-usememo",
+      "q": "When would you choose useCallback over useMemo?",
+      "intent": "Hook selection reasoning and understanding differences",
+      "signal": "Functions vs values, referential equality needs, child component optimization",
+      "parent": "root",
+      "metadata": {
+        "difficulty": "medium",
+        "trigger": "Solid basic understanding",
+        "depth": 1
+      }
+    },
+    {
+      "id": "practical-example",
+      "q": "Show me a real scenario where useCallback is essential",
+      "intent": "Practical application ability and experience",
+      "signal": "Child component props, event handlers, effect dependencies, real examples",
+      "parent": "root",
+      "metadata": {
+        "difficulty": "medium",
+        "trigger": "Good theoretical knowledge",
+        "depth": 1
+      }
+    },
+    {
+      "id": "complex-scenario",
+      "q": "Optimize this component with 100+ child components",
+      "intent": "Advanced optimization strategies at scale",
+      "signal": "React.memo combination, prop drilling solutions, context optimization",
+      "parent": "practical-example",
+      "metadata": {
+        "difficulty": "hard",
+        "trigger": "Strong practical examples given",
+        "depth": 2
+      }
+    },
+    {
+      "id": "antipatterns",
+      "q": "What are common useCallback anti-patterns?",
+      "intent": "Experience with gotchas and code quality awareness",
+      "signal": "Over-optimization, inline objects in deps, unnecessary memoization patterns",
+      "parent": "root",
+      "metadata": {
+        "difficulty": "medium",
+        "trigger": "Shows good understanding",
+        "depth": 1
+      }
+    },
+    {
+      "id": "code-review",
+      "q": "Fix this useCallback usage",
+      "intent": "Code quality assessment and refactoring skills",
+      "signal": "Identifies problems, suggests improvements, explains reasoning",
+      "parent": "antipatterns",
+      "metadata": {
+        "difficulty": "hard",
+        "trigger": "Good anti-pattern knowledge",
+        "depth": 2
+      }
+    },
+    {
+      "id": "testing",
+      "q": "How would you test components using useCallback?",
+      "intent": "Testing strategy and quality assurance mindset",
+      "signal": "Behavior testing vs implementation testing, mocking strategies",
+      "parent": "practical-example",
+      "metadata": {
+        "difficulty": "medium",
+        "trigger": "Senior-level practical discussion",
+        "depth": 2
+      }
+    }
+  ],
+  "topic": "react"
+}

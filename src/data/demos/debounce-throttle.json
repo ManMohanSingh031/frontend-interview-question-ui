@@ -1,0 +1,31 @@
+{
+  "id": "debounce-throttle",
+  "title": "Debounce vs Throttle",
+  "description": "Interactive demonstration showing the practical difference between debouncing and throttling user input events.",
+  "category": "javascript",
+  "difficulty": "intermediate",
+  "concept": "Debounce waits for pause in activity, then executes once. Throttle executes at regular intervals during activity.",
+  "implementation": "// Custom debounce hook\nfunction useDebounce(value, delay) {\n  const [debouncedValue, setDebouncedValue] = useState(value);\n\n  useEffect(() => {\n    const handler = setTimeout(() => {\n      setDebouncedValue(value);\n    }, delay);\n\n    return () => clearTimeout(handler);\n  }, [value, delay]);\n\n  return debouncedValue;\n}\n\n// Custom throttle hook\nfunction useThrottle(value, limit) {\n  const [throttledValue, setThrottledValue] = useState(value);\n  const lastRan = useRef(Date.now());\n\n  useEffect(() => {\n    const handler = setTimeout(() => {\n      if (Date.now() - lastRan.current >= limit) {\n        setThrottledValue(value);\n        lastRan.current = Date.now();\n      }\n    }, limit - (Date.now() - lastRan.current));\n\n    return () => clearTimeout(handler);\n  }, [value, limit]);\n\n  return throttledValue;\n}",
+  "explanation": "This demo shows the behavioral difference between debounce and throttle techniques:\n\n**Debounce (500ms):**\n- Waits for user to stop typing\n- Only executes after pause\n- Great for: API calls, form validation, search suggestions\n- Use case: Wait for user to finish typing before making API request\n\n**Throttle (300ms):**\n- Executes at regular intervals while typing continues\n- Limits execution frequency\n- Great for: Scroll events, resize handlers, button clicks\n- Use case: Update scroll position indicator while scrolling\n\n**Key Differences:**\n- Debounce: Execute once after delay\n- Throttle: Execute regularly during activity\n- Debounce: Better for expensive operations\n- Throttle: Better for continuous feedback",
+  "variations": [
+    {
+      "name": "Leading Edge Debounce",
+      "description": "Execute immediately, then wait for quiet period",
+      "code": "// Execute on leading edge\nfunction useLeadingDebounce(callback, delay) {\n  const timeoutRef = useRef();\n  const callbackRef = useRef(callback);\n  callbackRef.current = callback;\n\n  return useCallback((...args) => {\n    const executeNow = !timeoutRef.current;\n    \n    clearTimeout(timeoutRef.current);\n    timeoutRef.current = setTimeout(() => {\n      timeoutRef.current = null;\n    }, delay);\n    \n    if (executeNow) {\n      callbackRef.current(...args);\n    }\n  }, [delay]);\n}",
+      "complexity": "higher"
+    },
+    {
+      "name": "Throttle with Leading and Trailing",
+      "description": "Execute immediately and after delay",
+      "code": "function useThrottleLeadingTrailing(callback, limit) {\n  const lastRan = useRef();\n  const timeoutRef = useRef();\n  \n  return useCallback((...args) => {\n    if (!lastRan.current) {\n      callback(...args);\n      lastRan.current = Date.now();\n    } else {\n      clearTimeout(timeoutRef.current);\n      timeoutRef.current = setTimeout(() => {\n        if (Date.now() - lastRan.current >= limit) {\n          callback(...args);\n          lastRan.current = Date.now();\n        }\n      }, limit - (Date.now() - lastRan.current));\n    }\n  }, [callback, limit]);\n}",
+      "complexity": "higher"
+    }
+  ],
+  "relatedTopics": [
+    "Event handling optimization",
+    "Performance optimization",
+    "User experience design",
+    "API rate limiting",
+    "React hooks patterns"
+  ]
+}

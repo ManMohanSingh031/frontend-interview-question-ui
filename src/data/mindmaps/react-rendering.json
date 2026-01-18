@@ -1,0 +1,154 @@
+{
+  "id": "react-rendering",
+  "title": "React Rendering Model",
+  "summary": "Understanding React's rendering process is critical for senior frontend roles. This covers the Virtual DOM, reconciliation algorithm, fiber architecture, and performance optimization strategies that interviewers frequently test.",
+  "nodes": [
+    {
+      "id": "central",
+      "title": "React Rendering",
+      "description": "Core rendering process that transforms React elements into DOM updates",
+      "type": "central",
+      "position": { "x": 400, "y": 300 },
+      "connections": ["vdom", "reconciliation", "fiber", "performance", "lifecycle"],
+      "color": "#0891b2"
+    },
+    {
+      "id": "vdom",
+      "title": "Virtual DOM",
+      "description": "JavaScript objects representing DOM structure - lightweight, fast to create/compare",
+      "type": "branch",
+      "position": { "x": 200, "y": 180 },
+      "connections": ["central"],
+      "color": "#3b82f6"
+    },
+    {
+      "id": "reconciliation",
+      "title": "Reconciliation",
+      "description": "Diffing algorithm that compares virtual DOM trees - O(n) complexity with heuristics",
+      "type": "branch",
+      "position": { "x": 600, "y": 180 },
+      "connections": ["central"],
+      "color": "#3b82f6"
+    },
+    {
+      "id": "fiber",
+      "title": "Fiber Architecture",
+      "description": "Incremental rendering engine - time slicing, priority scheduling, interruptible updates",
+      "type": "branch",
+      "position": { "x": 300, "y": 450 },
+      "connections": ["central"],
+      "color": "#3b82f6"
+    },
+    {
+      "id": "performance",
+      "title": "Performance",
+      "description": "React.memo, useMemo, useCallback, code splitting - preventing unnecessary re-renders",
+      "type": "branch",
+      "position": { "x": 500, "y": 450 },
+      "connections": ["central"],
+      "color": "#3b82f6"
+    },
+    {
+      "id": "lifecycle",
+      "title": "Lifecycle",
+      "description": "Mount, update, unmount phases - useEffect for side effects and cleanup",
+      "type": "branch",
+      "position": { "x": 150, "y": 350 },
+      "connections": ["central"],
+      "color": "#3b82f6"
+    }
+  ],
+  "traps": [
+    {
+      "misconception": "React re-renders everything on state change",
+      "correction": "Only affected components and their children re-render",
+      "explanation": "React's reconciliation only updates components whose props or state have changed"
+    },
+    {
+      "misconception": "Virtual DOM is always faster than Direct DOM",
+      "correction": "Virtual DOM adds overhead for simple operations",
+      "explanation": "For simple updates, direct DOM manipulation can be faster. VDOM shines with complex updates"
+    },
+    {
+      "misconception": "Keys don't matter for performance",
+      "correction": "Keys are critical for efficient reconciliation",
+      "explanation": "Without proper keys, React may unnecessarily destroy and recreate components"
+    },
+    {
+      "misconception": "setState is always asynchronous",
+      "correction": "Can be synchronous in event handlers (React 17)",
+      "explanation": "React 18 made batching automatic, but timing depends on context"
+    },
+    {
+      "misconception": "Fiber eliminated all performance issues",
+      "correction": "Still need proper optimization techniques",
+      "explanation": "Fiber improves scheduling but doesn't fix poorly written components"
+    }
+  ],
+  "followups": [
+    {
+      "question": "How does React decide what to re-render?",
+      "intent": "Test understanding of React's reconciliation triggers",
+      "signal": "Mentions state changes, prop changes, parent re-renders, context updates",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Explain the diffing algorithm in detail",
+      "intent": "Deep dive into reconciliation mechanics",
+      "signal": "Discusses tree comparison, element type changes, key-based matching",
+      "difficulty": "hard"
+    },
+    {
+      "question": "How does Fiber improve performance over Stack reconciler?",
+      "intent": "Understanding of React's architecture evolution",
+      "signal": "Explains time slicing, priority scheduling, interruptible rendering",
+      "difficulty": "hard"
+    },
+    {
+      "question": "When would you use React.memo vs useMemo?",
+      "intent": "Performance optimization knowledge",
+      "signal": "Component memoization vs value memoization, referential equality",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What causes unnecessary re-renders and how to fix them?",
+      "intent": "Practical debugging skills",
+      "signal": "Inline objects/functions, missing dependencies, context value changes",
+      "difficulty": "medium"
+    }
+  ],
+  "usecases": [
+    {
+      "title": "Large Lists Optimization",
+      "description": "Rendering 10,000+ items efficiently without blocking UI",
+      "example": "React.memo() + virtualization + proper keys + stable references",
+      "complexity": "high"
+    },
+    {
+      "title": "Form Performance",
+      "description": "Preventing re-renders on every keystroke in complex forms",
+      "example": "useCallback for handlers + controlled inputs + field-level optimization",
+      "complexity": "medium"
+    },
+    {
+      "title": "Context Optimization",
+      "description": "Avoiding provider re-render cascades in large applications",
+      "example": "Split contexts + useMemo for values + selective subscriptions",
+      "complexity": "high"
+    },
+    {
+      "title": "Real-time Data Updates",
+      "description": "Efficient updates for dashboards with live data streams",
+      "example": "Selective component updates + batch state changes + debouncing",
+      "complexity": "medium"
+    },
+    {
+      "title": "Animation Performance",
+      "description": "60fps animations with React without blocking rendering",
+      "example": "requestAnimationFrame + refs for DOM access + CSS transforms",
+      "complexity": "medium"
+    }
+  ],
+  "code": "// Optimized component with proper memoization\nconst OptimizedList = React.memo(({ items, onItemClick }) => {\n  return (\n    <div>\n      {items.map(item => (\n        <ListItem\n          key={item.id}\n          item={item}\n          onClick={onItemClick}\n        />\n      ))}\n    </div>\n  );\n}, (prevProps, nextProps) => {\n  return (\n    prevProps.items.length === nextProps.items.length &&\n    prevProps.onItemClick === nextProps.onItemClick\n  );\n});\n\n// Parent component with stable references\nfunction ParentComponent() {\n  const [items, setItems] = useState([]);\n  \n  const handleItemClick = useCallback((itemId) => {\n    setItems(prev => prev.map(item => \n      item.id === itemId \n        ? { ...item, selected: !item.selected }\n        : item\n    ));\n  }, []);\n  \n  return (\n    <OptimizedList\n      items={items}\n      onItemClick={handleItemClick}\n    />\n  );\n}",
+  "topic": "react"
+}

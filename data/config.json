@@ -1,0 +1,27 @@
+{
+  "site": {
+    "name": "Demo Site",
+    "description": "A Next.js demo with interactive components"
+  },
+  "navigation": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "Demos",
+      "href": "/demos"
+    },
+    {
+      "label": "Content",
+      "href": "/content"
+    }
+  ],
+  "features": [
+    "Next.js 14",
+    "TailwindCSS",
+    "Headless UI",
+    "MDX Support",
+    "TypeScript"
+  ]
+}

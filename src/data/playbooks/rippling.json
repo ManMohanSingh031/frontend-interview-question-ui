@@ -1,0 +1,371 @@
+{
+  "id": "rippling",
+  "company": "Rippling",
+  "logo": "/logos/rippling.svg",
+  "summary": "B2B HR and payroll platform with complex data flows, enterprise UX requirements, and high-performance expectations. Fast-paced environment with significant technical ownership.",
+  "levels": [
+    {
+      "id": "sde1",
+      "title": "Software Engineer I",
+      "level": "L3",
+      "experience": "1-3 years",
+      "salary": "$130k-$180k",
+      "focus": [
+        "React fundamentals and hooks",
+        "Component architecture patterns",
+        "Basic state management",
+        "Testing with Jest/RTL",
+        "Git workflow and code reviews"
+      ],
+      "expectations": [
+        "Implement features with guidance",
+        "Write maintainable, testable code",
+        "Participate in code reviews",
+        "Learn business domain quickly",
+        "Collaborate with design and backend"
+      ]
+    },
+    {
+      "id": "sde2",
+      "title": "Software Engineer II",
+      "level": "L4",
+      "experience": "3-5 years",
+      "salary": "$160k-$220k",
+      "focus": [
+        "Advanced React patterns",
+        "Performance optimization",
+        "Frontend system design",
+        "API integration strategies",
+        "Build tools and deployment"
+      ],
+      "expectations": [
+        "Own features end-to-end",
+        "Make architectural decisions",
+        "Mentor junior engineers",
+        "Drive technical discussions",
+        "Optimize for user experience"
+      ]
+    },
+    {
+      "id": "sde3",
+      "title": "Senior Software Engineer",
+      "level": "L5",
+      "experience": "5+ years",
+      "salary": "$200k-$280k",
+      "focus": [
+        "System architecture design",
+        "Technical leadership",
+        "Cross-team collaboration",
+        "Performance at scale",
+        "Developer experience"
+      ],
+      "expectations": [
+        "Drive technical strategy",
+        "Lead complex projects",
+        "Influence team practices",
+        "Solve ambiguous problems",
+        "Raise engineering standards"
+      ]
+    }
+  ],
+  "rounds": [
+    {
+      "name": "Technical Screen",
+      "duration": "45-60 minutes",
+      "format": "coding",
+      "description": "Live coding in React - implement a component, debug existing code, discuss trade-offs",
+      "difficulty": "medium",
+      "preparation": [
+        "Practice React hooks implementation",
+        "Review debugging techniques",
+        "Prepare to explain your thought process",
+        "Know common gotchas and edge cases"
+      ]
+    },
+    {
+      "name": "System Design",
+      "duration": "60 minutes",
+      "format": "system-design",
+      "description": "Design a frontend system - component architecture, data flow, state management, scalability",
+      "difficulty": "hard",
+      "preparation": [
+        "Study frontend architecture patterns",
+        "Practice explaining design decisions",
+        "Review state management approaches",
+        "Understand performance trade-offs"
+      ]
+    },
+    {
+      "name": "Deep Technical",
+      "duration": "45-60 minutes",
+      "format": "technical-discussion",
+      "description": "Deep dive into specific areas - performance, browser internals, advanced React concepts",
+      "difficulty": "hard",
+      "preparation": [
+        "Review browser rendering pipeline",
+        "Understand React fiber architecture",
+        "Study performance optimization",
+        "Know testing strategies"
+      ]
+    },
+    {
+      "name": "Behavioral",
+      "duration": "45 minutes",
+      "format": "behavioral",
+      "description": "Cross-team collaboration, conflict resolution, ownership examples, technical leadership",
+      "difficulty": "medium",
+      "preparation": [
+        "Prepare STAR method examples",
+        "Think about cross-functional work",
+        "Review challenging technical decisions",
+        "Consider growth and learning examples"
+      ]
+    },
+    {
+      "name": "Bar Raiser",
+      "duration": "45 minutes",
+      "format": "behavioral",
+      "description": "Culture fit, technical judgment, long-term thinking, senior engineer evaluation",
+      "difficulty": "hard",
+      "preparation": [
+        "Research Rippling's values",
+        "Prepare technical leadership stories",
+        "Think about scaling challenges",
+        "Consider team building examples"
+      ]
+    }
+  ],
+  "patterns": [
+    {
+      "category": "react",
+      "frequency": "high",
+      "questions": [
+        "Optimize this component with many re-renders",
+        "Debug why this useEffect runs infinitely",
+        "Implement a complex form with validation",
+        "Design a reusable component library",
+        "Handle real-time data updates efficiently"
+      ],
+      "examples": [
+        "Employee list with 1000+ entries",
+        "Payroll calculation interface",
+        "Multi-step onboarding wizard",
+        "Permission management UI",
+        "Document upload with progress"
+      ],
+      "signals": [
+        "Discusses React.memo and useMemo appropriately",
+        "Understands when to use useCallback",
+        "Explains virtual DOM and reconciliation",
+        "Considers accessibility from the start",
+        "Thinks about error boundaries and edge cases"
+      ]
+    },
+    {
+      "category": "performance",
+      "frequency": "high",
+      "questions": [
+        "This page loads slowly, how do you debug?",
+        "Optimize bundle size for production",
+        "Handle memory leaks in single-page app",
+        "Implement lazy loading for large datasets",
+        "Improve Core Web Vitals scores"
+      ],
+      "examples": [
+        "Dashboard with multiple charts loading",
+        "Large data tables with sorting/filtering",
+        "Image galleries with thumbnails",
+        "Real-time analytics interfaces",
+        "Mobile-optimized responsive design"
+      ],
+      "signals": [
+        "Uses browser DevTools profiling effectively",
+        "Understands bundle analysis and code splitting",
+        "Discusses caching strategies appropriately",
+        "Considers mobile performance constraints",
+        "Measures impact of optimizations"
+      ]
+    },
+    {
+      "category": "system-design",
+      "frequency": "medium",
+      "questions": [
+        "Design an HR dashboard architecture",
+        "Build a document management system",
+        "Create a permission-based UI system",
+        "Design real-time notification system",
+        "Plan a micro-frontend architecture"
+      ],
+      "examples": [
+        "Employee directory with search/filters",
+        "Payroll processing workflow",
+        "Benefits enrollment system",
+        "Time tracking interface",
+        "Reporting and analytics platform"
+      ],
+      "signals": [
+        "Considers data flow and state management",
+        "Discusses API design and integration",
+        "Plans for scalability and maintainability",
+        "Thinks about user experience and accessibility",
+        "Addresses security and privacy concerns"
+      ]
+    },
+    {
+      "category": "testing",
+      "frequency": "medium",
+      "questions": [
+        "How do you test complex user interactions?",
+        "Strategy for testing async operations",
+        "Mock external dependencies effectively",
+        "Test accessibility in components",
+        "Integration vs unit testing approach"
+      ],
+      "examples": [
+        "Multi-step form submission flow",
+        "File upload with validation",
+        "Real-time data synchronization",
+        "Error handling and recovery",
+        "Browser compatibility testing"
+      ],
+      "signals": [
+        "Focuses on behavior over implementation",
+        "Understands testing pyramid concepts",
+        "Uses appropriate testing tools",
+        "Considers edge cases and error states",
+        "Balances test coverage with maintainability"
+      ]
+    }
+  ],
+  "prep": [
+    {
+      "phase": "week-before",
+      "title": "Foundation Building",
+      "tasks": [
+        {
+          "task": "Master React hooks patterns and optimization",
+          "priority": "high",
+          "timeRequired": "3-4 hours",
+          "resources": [
+            "React docs on hooks",
+            "Dan Abramov's blog posts",
+            "Practice coding exercises"
+          ]
+        },
+        {
+          "task": "Study browser performance and Core Web Vitals",
+          "priority": "high",
+          "timeRequired": "2-3 hours",
+          "resources": [
+            "web.dev performance guides",
+            "Chrome DevTools documentation",
+            "Lighthouse audit practices"
+          ]
+        },
+        {
+          "task": "Practice frontend system design",
+          "priority": "medium",
+          "timeRequired": "2-3 hours",
+          "resources": [
+            "Frontend system design interviews",
+            "Component architecture patterns",
+            "State management strategies"
+          ]
+        },
+        {
+          "task": "Build 2-3 complex React components",
+          "priority": "high",
+          "timeRequired": "4-5 hours",
+          "resources": [
+            "Data table with sorting/filtering",
+            "Multi-step form wizard",
+            "Real-time dashboard component"
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "day-before",
+      "title": "Final Review",
+      "tasks": [
+        {
+          "task": "Review React rendering and reconciliation",
+          "priority": "high",
+          "timeRequired": "30 minutes",
+          "resources": [
+            "Virtual DOM concepts",
+            "Fiber architecture basics",
+            "Common re-render causes"
+          ]
+        },
+        {
+          "task": "Practice explaining technical decisions",
+          "priority": "high",
+          "timeRequired": "45 minutes",
+          "resources": [
+            "Recent project trade-offs",
+            "Performance optimization choices",
+            "Architecture decision examples"
+          ]
+        },
+        {
+          "task": "Prepare behavioral examples",
+          "priority": "medium",
+          "timeRequired": "30 minutes",
+          "resources": [
+            "Cross-team collaboration stories",
+            "Technical leadership examples",
+            "Challenging debugging experiences"
+          ]
+        },
+        {
+          "task": "Research Rippling's recent updates",
+          "priority": "low",
+          "timeRequired": "15 minutes",
+          "resources": [
+            "Company blog posts",
+            "Product feature releases",
+            "Engineering team insights"
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "day-of",
+      "title": "Interview Execution",
+      "tasks": [
+        {
+          "task": "Review key React concepts quickly",
+          "priority": "medium",
+          "timeRequired": "10 minutes",
+          "resources": [
+            "useCallback vs useMemo",
+            "Context optimization",
+            "Error boundary patterns"
+          ]
+        },
+        {
+          "task": "Prepare thoughtful questions about team",
+          "priority": "high",
+          "timeRequired": "5 minutes",
+          "resources": [
+            "Technical challenges questions",
+            "Team collaboration practices",
+            "Growth opportunities"
+          ]
+        },
+        {
+          "task": "Set up coding environment",
+          "priority": "high",
+          "timeRequired": "5 minutes",
+          "resources": [
+            "Test screen sharing",
+            "Prepare code editor",
+            "Check internet connection"
+          ]
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2024-01-15"
+}
