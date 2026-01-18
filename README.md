@@ -1,36 +1,158 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FrontendQuestion - Frontend Interview Preparation Platform
 
-## Getting Started
+A comprehensive Next.js platform designed to help frontend engineers prepare for technical interviews at top companies. Features interactive mindmaps, question trees, live coding demos, and company-specific playbooks.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 📚 **Topic-Based Learning Paths**
+- **React**: Hooks, performance, patterns, and advanced concepts
+- **JavaScript**: Core concepts, async patterns, ES6+ features
+- **Browser Internals**: Rendering pipeline, performance optimization
+- **System Design**: Frontend architecture, component design patterns
+- **Performance**: Core Web Vitals, scalability strategies
+- **Testing**: Unit, integration, and e2e testing approaches
+
+### 🧠 **Interactive Mindmaps**
+- Visual knowledge graphs with clickable nodes
+- SVG-based interactive visualizations
+- Connected learning concepts with detailed explanations
+- Sample: React Rendering Model with Virtual DOM, Reconciliation, and Fiber
+
+### 🌳 **Question Trees**
+- Progressive interview question flows
+- Branching logic based on candidate responses
+- Difficulty levels and expected signals for each question
+- Sample: useCallback interview tree with 11 interconnected questions
+
+### 💻 **Interactive Demos**
+- Live coding demonstrations with real-time feedback
+- Side-by-side code comparisons
+- Copy functionality for easy reference
+- Sample: Debounce vs Throttle with interactive examples
+
+### 📖 **Company Playbooks**
+- Company-specific interview preparation guides
+- Role levels and salary expectations
+- Interview process breakdowns and timing strategies
+- Sample: Rippling playbook covering L3-L5 frontend roles
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 3.4 with custom dark theme
+- **Components**: Custom UI component library
+- **Data**: JSON-based content management
+- **Development**: ESLint, PostCSS, Hot Module Replacement
+
+## 🎨 Design System
+
+- **Theme**: Professional dark theme with blue/cyan gradients
+- **Typography**: Inter font with proper hierarchy
+- **Components**: 15+ reusable UI components
+- **Responsive**: Mobile-first design approach
+- **Interactive**: Hover effects and smooth transitions
+
+## 📁 Project Structure
+
+```
+src/
+├── app/                     # Next.js App Router pages
+│   ├── demos/[id]/          # Interactive coding demonstrations
+│   ├── playbooks/[company]/ # Company-specific interview guides
+│   ├── topics/[topic]/      # Topic-based learning paths
+│   ├── tree/[id]/           # Question tree explorations
+│   └── page.tsx             # Homepage with features showcase
+├── components/
+│   ├── ui/                  # Reusable UI component library
+│   └── demos/               # Interactive demo components
+├── data/                    # JSON data files for content
+│   ├── mindmaps/            # Mindmap structures and data
+│   ├── trees/               # Question tree hierarchies
+│   ├── demos/               # Demo configurations
+│   └── playbooks/           # Company interview guides
+└── lib/                     # Utilities and type definitions
+    └── types/               # TypeScript type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ManMohanSingh031/frontend-interview-question-ui.git
+   cd frontend-interview-question-ui
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Open in browser**
+   ```
+   http://localhost:3000
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📋 Available Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
-## Deploy on Vercel
+## 🎯 Current Content
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Sample Implementation
+- ✅ React Rendering mindmap with Virtual DOM concepts
+- ✅ useCallback question tree with progressive difficulty
+- ✅ Debounce vs Throttle interactive demo
+- ✅ Rippling company playbook (L3-L5 interview process)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Topics Coverage
+- **React**: 15 learning resources (Intermediate level)
+- **JavaScript**: 20 learning resources (Beginner level)
+- **Advanced Topics**: Browser, Performance, System Design, Testing
+
+## 🔧 Development
+
+The platform uses a modular architecture with:
+
+- **Type-safe data structures** for all content types
+- **File-based routing** with dynamic pages
+- **JSON content management** for easy updates
+- **Component composition** patterns
+- **Server-side rendering** with client-side interactivity
+
+## 🎨 Customization
+
+### Adding New Content
+
+1. **Mindmaps**: Add JSON files to `src/data/mindmaps/`
+2. **Question Trees**: Add JSON files to `src/data/trees/`
+3. **Demos**: Add JSON files to `src/data/demos/`
+4. **Playbooks**: Add JSON files to `src/data/playbooks/`
+
+### Component Development
+
+All UI components follow consistent patterns with:
+- TypeScript interfaces for props
+- Tailwind CSS for styling
+- Responsive design considerations
+- Accessibility best practices
+
+## 📝 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
+
+Built with ❤️ for frontend engineers preparing for their next career opportunity.
