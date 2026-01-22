@@ -67,11 +67,11 @@ const topicData: Record<string, any> = {
     mindmap: reactMindmapData,
     resources: [
       { type: "mindmap", title: "React Rendering Model", id: "react-rendering", difficulty: "advanced" },
-      { type: "tree", title: "useCallback Interview Tree", id: "usecallback-tree", difficulty: "medium" },
-      { type: "demo", title: "Hook Optimization", id: "hook-optimization", difficulty: "advanced" },
-      { type: "mindmap", title: "Component Patterns", id: "component-patterns", difficulty: "intermediate" },
-      { type: "tree", title: "State Management Questions", id: "state-management", difficulty: "medium" },
-      { type: "demo", title: "Performance Profiling", id: "performance-profiling", difficulty: "advanced" },
+      { type: "tree", title: "useCallback Interview Tree", id: "usecallback", difficulty: "medium" },
+      { type: "tree", title: "useMemo vs useCallback", id: "usememo-vs-usecallback", difficulty: "advanced" },
+      { type: "tree", title: "React Concurrent Features", id: "react-concurrent-features", difficulty: "advanced" },
+      { type: "demo", title: "React Re-render Demo", id: "react-rerender-demo", difficulty: "intermediate" },
+      { type: "demo", title: "Debounce & Throttle", id: "debounce-throttle", difficulty: "intermediate" },
     ],
   },
   javascript: {
@@ -126,10 +126,7 @@ const topicData: Record<string, any> = {
       ],
     },
     resources: [
-      { type: "mindmap", title: "Event Loop Explained", id: "event-loop", difficulty: "intermediate" },
-      { type: "tree", title: "Closure Deep Dive", id: "closures-tree", difficulty: "medium" },
-      { type: "demo", title: "Promises vs Async/Await", id: "async-demo", difficulty: "beginner" },
-      { type: "mindmap", title: "Prototype Chain", id: "prototype-chain", difficulty: "intermediate" },
+      { type: "demo", title: "Debounce & Throttle", id: "debounce-throttle", difficulty: "intermediate" },
     ],
   },
   browser: {
@@ -139,54 +136,267 @@ const topicData: Record<string, any> = {
     color: "purple",
     difficulty: "advanced",
     mindmap: {
-      title: "Browser Architecture",
+      title: "Browser Rendering Pipeline",
       nodes: [
         {
           id: "central",
-          title: "Browser",
-          description: "Multi-process architecture for web rendering",
+          title: "Browser Rendering Pipeline",
+          description: "Deep-dive into browser rendering mechanics and performance optimization",
           type: "central" as const,
           position: { x: 400, y: 300 },
-          connections: ["rendering", "js-engine", "networking", "storage"],
+          connections: ["parsing", "cssom", "render-tree", "layout", "paint", "composite"],
         },
         {
-          id: "rendering",
-          title: "Rendering Pipeline",
-          description: "Parse, Style, Layout, Paint, Composite",
+          id: "parsing",
+          title: "HTML Parsing & DOM",
+          description: "Tokenization, tree construction, and script blocking behavior",
           type: "branch" as const,
-          position: { x: 200, y: 150 },
+          position: { x: 200, y: 100 },
           connections: ["central"],
         },
         {
-          id: "js-engine",
-          title: "JavaScript Engine",
-          description: "V8, JIT compilation, garbage collection",
+          id: "cssom",
+          title: "CSS Parsing & CSSOM",
+          description: "Render-blocking CSS resolution and selector performance",
           type: "branch" as const,
-          position: { x: 600, y: 150 },
+          position: { x: 600, y: 100 },
           connections: ["central"],
         },
         {
-          id: "networking",
-          title: "Networking",
-          description: "HTTP, caching, service workers, CDN",
+          id: "render-tree",
+          title: "Render Tree Construction",
+          description: "DOM + CSSOM merge strategy and computed styles",
           type: "branch" as const,
-          position: { x: 200, y: 450 },
+          position: { x: 100, y: 300 },
           connections: ["central"],
         },
         {
-          id: "storage",
-          title: "Storage",
-          description: "LocalStorage, IndexedDB, cookies, cache API",
+          id: "layout",
+          title: "Layout (Reflow)",
+          description: "Box model calculations and layout thrashing prevention",
           type: "branch" as const,
-          position: { x: 600, y: 450 },
+          position: { x: 700, y: 300 },
+          connections: ["central"],
+        },
+        {
+          id: "paint",
+          title: "Paint",
+          description: "Paint complexity, layer creation, and overdraw analysis",
+          type: "branch" as const,
+          position: { x: 200, y: 500 },
+          connections: ["central"],
+        },
+        {
+          id: "composite",
+          title: "Compositing",
+          description: "GPU acceleration triggers and layer optimization",
+          type: "branch" as const,
+          position: { x: 600, y: 500 },
           connections: ["central"],
         },
       ],
     },
     resources: [
-      { type: "mindmap", title: "Critical Rendering Path", id: "rendering-path", difficulty: "advanced" },
-      { type: "tree", title: "Performance Optimization", id: "perf-optimization", difficulty: "advanced" },
-      { type: "demo", title: "Paint & Composite Demo", id: "paint-demo", difficulty: "intermediate" },
+      { type: "mindmap", title: "Browser Rendering Pipeline", id: "browser-rendering-pipeline", difficulty: "advanced" },
+    ],
+  },
+  performance: {
+    title: "Web Performance",
+    description: "Advanced performance optimization techniques, Core Web Vitals, and debugging strategies for senior frontend roles",
+    icon: "⚡",
+    color: "orange",
+    difficulty: "advanced",
+    mindmap: {
+      title: "Performance Optimization",
+      nodes: [
+        {
+          id: "central",
+          title: "Web Performance",
+          description: "Optimizing frontend applications for speed and user experience",
+          type: "central",
+          position: { x: 400, y: 300 },
+          connections: ["metrics", "loading", "runtime", "monitoring"],
+          color: "#f97316"
+        },
+        {
+          id: "metrics",
+          title: "Core Web Vitals",
+          description: "LCP, FID, CLS - Google's user-centric performance metrics",
+          type: "branch",
+          position: { x: 200, y: 180 },
+          connections: ["central"],
+          color: "#3b82f6"
+        },
+        {
+          id: "loading",
+          title: "Loading Performance",
+          description: "Bundle optimization, lazy loading, resource prioritization",
+          type: "branch",
+          position: { x: 600, y: 180 },
+          connections: ["central"],
+          color: "#10b981"
+        },
+        {
+          id: "runtime",
+          title: "Runtime Performance",
+          description: "React optimization, memory management, main thread blocking",
+          type: "branch",
+          position: { x: 200, y: 420 },
+          connections: ["central"],
+          color: "#8b5cf6"
+        },
+        {
+          id: "monitoring",
+          title: "Performance Monitoring",
+          description: "Real user monitoring, synthetic testing, DevTools profiling",
+          type: "branch",
+          position: { x: 600, y: 420 },
+          connections: ["central"],
+          color: "#ef4444"
+        }
+      ]
+    },
+    resources: [
+      { type: "mindmap", title: "Browser Rendering Pipeline", id: "browser-rendering-pipeline", difficulty: "advanced" },
+      { type: "demo", title: "Debounce & Throttle", id: "debounce-throttle", difficulty: "intermediate" },
+    ],
+  },
+  "system-design": {
+    title: "System Design",
+    description: "Frontend architecture patterns, scalability solutions, and component design for large-scale applications",
+    icon: "🏗",
+    color: "indigo",
+    difficulty: "advanced",
+    mindmap: {
+      title: "Frontend System Design",
+      nodes: [
+        {
+          id: "central",
+          title: "Frontend System Design",
+          description: "Architectural patterns and scalability strategies for large frontend applications",
+          type: "central",
+          position: { x: 400, y: 300 },
+          connections: ["architecture", "state", "routing", "performance", "deployment"],
+          color: "#6366f1"
+        },
+        {
+          id: "architecture",
+          title: "Architecture Patterns",
+          description: "Micro-frontends, component design, module federation",
+          type: "branch",
+          position: { x: 200, y: 150 },
+          connections: ["central"],
+          color: "#8b5cf6"
+        },
+        {
+          id: "state",
+          title: "State Management",
+          description: "Global state, data flow, caching strategies",
+          type: "branch",
+          position: { x: 600, y: 150 },
+          connections: ["central"],
+          color: "#3b82f6"
+        },
+        {
+          id: "routing",
+          title: "Routing & Navigation",
+          description: "Client-side routing, lazy loading, code splitting",
+          type: "branch",
+          position: { x: 150, y: 450 },
+          connections: ["central"],
+          color: "#10b981"
+        },
+        {
+          id: "performance",
+          title: "Scalability",
+          description: "Bundle optimization, CDN, caching, load balancing",
+          type: "branch",
+          position: { x: 650, y: 450 },
+          connections: ["central"],
+          color: "#f59e0b"
+        },
+        {
+          id: "deployment",
+          title: "Deployment Strategy",
+          description: "CI/CD, feature flags, A/B testing, monitoring",
+          type: "branch",
+          position: { x: 400, y: 500 },
+          connections: ["central"],
+          color: "#ef4444"
+        }
+      ]
+    },
+    resources: [
+      { type: "demo", title: "Debounce & Throttle", id: "debounce-throttle", difficulty: "intermediate" },
+    ],
+  },
+  testing: {
+    title: "Frontend Testing",
+    description: "Unit testing, integration testing, and test-driven development strategies for frontend applications",
+    icon: "🧪",
+    color: "cyan",
+    difficulty: "intermediate",
+    mindmap: {
+      title: "Frontend Testing Strategy",
+      nodes: [
+        {
+          id: "central",
+          title: "Frontend Testing",
+          description: "Comprehensive testing strategies for reliable frontend applications",
+          type: "central",
+          position: { x: 400, y: 300 },
+          connections: ["unit", "integration", "e2e", "tools", "practices"],
+          color: "#06b6d4"
+        },
+        {
+          id: "unit",
+          title: "Unit Testing",
+          description: "Component testing, pure function testing, mocking strategies",
+          type: "branch",
+          position: { x: 200, y: 180 },
+          connections: ["central"],
+          color: "#3b82f6"
+        },
+        {
+          id: "integration",
+          title: "Integration Testing",
+          description: "API testing, component integration, user flow testing",
+          type: "branch",
+          position: { x: 600, y: 180 },
+          connections: ["central"],
+          color: "#10b981"
+        },
+        {
+          id: "e2e",
+          title: "End-to-End Testing",
+          description: "Browser automation, user journey testing, cross-browser testing",
+          type: "branch",
+          position: { x: 200, y: 420 },
+          connections: ["central"],
+          color: "#8b5cf6"
+        },
+        {
+          id: "tools",
+          title: "Testing Tools",
+          description: "Jest, React Testing Library, Playwright, Cypress",
+          type: "branch",
+          position: { x: 600, y: 420 },
+          connections: ["central"],
+          color: "#f59e0b"
+        },
+        {
+          id: "practices",
+          title: "Best Practices",
+          description: "TDD, test coverage, CI/CD integration, test maintenance",
+          type: "branch",
+          position: { x: 400, y: 500 },
+          connections: ["central"],
+          color: "#ef4444"
+        }
+      ]
+    },
+    resources: [
+      { type: "demo", title: "Debounce & Throttle", id: "debounce-throttle", difficulty: "intermediate" },
     ],
   },
 };
@@ -280,7 +490,7 @@ export default function TopicPage({ params }: TopicPageProps) {
             {topic.resources.map((resource: any, index: number) => (
               <Link
                 key={resource.id}
-                href={`/${resource.type}/${resource.id}`}
+                href={`/${resource.type === 'demo' ? 'demos' : resource.type === 'mindmap' ? 'mindmaps' : resource.type}/${resource.id}`}
                 className="bg-dark-800 rounded-2xl p-6 border border-gray-700 hover:border-primary-500 transition-all duration-300 group cursor-pointer"
               >
                 <div className="flex items-center mb-4">

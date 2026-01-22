@@ -80,7 +80,7 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
             </span>
             <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
             <span className="text-gray-500 text-sm">
-              {playbookData.levels.length} role levels • {playbookData.rounds.length} interview rounds
+              {playbookData.levels?.length || playbookData.roles?.length || 3} role levels • {playbookData.rounds?.length || playbookData.interviewRounds?.length || 4} interview rounds
             </span>
           </div>
         </header>
@@ -94,55 +94,70 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
             </h2>
 
             <div className="space-y-6">
-              {playbookData.levels.map((level: any) => (
-                <div key={level.id} className="bg-dark-900 border border-gray-800 rounded-xl p-8">
+              {(playbookData.levels || playbookData.roles || []).map((level: any, index: number) => (
+                <div key={level.id || level.level || index} className="bg-dark-900 border border-gray-800 rounded-xl p-8">
                   <div className="flex items-start justify-between mb-6">
                     <div className="flex items-center gap-4">
                       <div className={`
-                        w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-lg
-                        ${level.level === 'L3' ? 'bg-green-500' :
-                          level.level === 'L4' ? 'bg-blue-500' :
-                          'bg-purple-500'}
+                        w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-xs
+                        ${level.level.includes('SDE-2') ? 'bg-green-500' :
+                          level.level.includes('SDE-3') ? 'bg-blue-500' :
+                          level.level.includes('Staff') ? 'bg-purple-500' :
+                          'bg-orange-500'}
                       `}>
                         {level.level}
                       </div>
                       <div>
-                        <h3 className="text-2xl font-bold text-white mb-1">{level.title}</h3>
+                        <h3 className="text-2xl font-bold text-white mb-1">{level.title || level.level}</h3>
                         <p className="text-gray-400">{level.experience} experience</p>
                       </div>
                     </div>
-                    {level.salary && (
+                    {(level.salary || level.totalCompensation) && (
                       <div className="text-right">
-                        <p className="text-2xl font-bold text-green-400">{level.salary}</p>
+                        <p className="text-2xl font-bold text-green-400">{level.salary || level.totalCompensation}</p>
                         <p className="text-gray-500 text-sm">Total compensation</p>
+                        {level.baseSalary && (
+                          <p className="text-gray-400 text-xs mt-1">Base: {level.baseSalary}</p>
+                        )}
                       </div>
                     )}
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div>
-                      <h4 className="font-semibold text-gray-200 mb-4">Technical Focus</h4>
-                      <ul className="space-y-2">
-                        {level.focus.map((item: string, index: number) => (
-                          <li key={index} className="flex items-start text-gray-300 text-sm">
-                            <span className="w-1.5 h-1.5 bg-accent-400 rounded-full mr-3 mt-2"></span>
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    {level.focus && (
+                      <div>
+                        <h4 className="font-semibold text-gray-200 mb-4">Technical Focus</h4>
+                        <ul className="space-y-2">
+                          {level.focus.map((item: string, index: number) => (
+                            <li key={index} className="flex items-start text-gray-300 text-sm">
+                              <span className="w-1.5 h-1.5 bg-accent-400 rounded-full mr-3 mt-2"></span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
-                    <div>
-                      <h4 className="font-semibold text-gray-200 mb-4">Role Expectations</h4>
-                      <ul className="space-y-2">
-                        {level.expectations.map((item: string, index: number) => (
-                          <li key={index} className="flex items-start text-gray-300 text-sm">
-                            <span className="w-1.5 h-1.5 bg-green-400 rounded-full mr-3 mt-2"></span>
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    {level.expectations && (
+                      <div>
+                        <h4 className="font-semibold text-gray-200 mb-4">Role Expectations</h4>
+                        <ul className="space-y-2">
+                          {level.expectations.map((item: string, index: number) => (
+                            <li key={index} className="flex items-start text-gray-300 text-sm">
+                              <span className="w-1.5 h-1.5 bg-green-400 rounded-full mr-3 mt-2"></span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {level.notes && (
+                      <div className="lg:col-span-2">
+                        <h4 className="font-semibold text-gray-200 mb-4">Notes</h4>
+                        <p className="text-gray-300 text-sm">{level.notes}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -157,14 +172,14 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
             </h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {playbookData.rounds.map((round: any, index: number) => (
-                <div key={round.name} className="bg-dark-900 border border-gray-800 rounded-xl p-6">
+              {(playbookData.rounds || playbookData.interviewRounds || []).map((round: any, index: number) => (
+                <div key={round.name || round.title || round.round || index} className="bg-dark-900 border border-gray-800 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center font-bold text-sm">
-                        {index + 1}
+                        {round.round || index + 1}
                       </div>
-                      <h3 className="font-bold text-xl text-white">{round.name}</h3>
+                      <h3 className="font-bold text-xl text-white">{round.name || round.title}</h3>
                     </div>
                     <DifficultyBadge level={round.difficulty} size="sm" />
                   </div>
@@ -172,24 +187,28 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
                   <div className="mb-4">
                     <div className="flex items-center gap-4 text-sm text-gray-400 mb-2">
                       <span>⏱ {round.duration}</span>
-                      <span>📋 {round.format.replace('-', ' ')}</span>
+                      <span>📋 {round.format?.replace('-', ' ') || 'Interview format'}</span>
                     </div>
                     <p className="text-gray-300 text-sm leading-relaxed">
-                      {round.description}
+                      {round.description || round.focus}
                     </p>
                   </div>
 
-                  <div>
-                    <h4 className="font-medium text-gray-200 mb-2 text-sm">Preparation Focus:</h4>
-                    <ul className="space-y-1">
-                      {round.preparation.map((item: string, prepIndex: number) => (
-                        <li key={prepIndex} className="text-xs text-gray-400 flex items-start">
-                          <span className="w-1 h-1 bg-accent-400 rounded-full mr-2 mt-1.5"></span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {(round.preparation || round.details) && (
+                    <div>
+                      <h4 className="font-medium text-gray-200 mb-2 text-sm">
+                        {round.preparation ? 'Preparation Focus:' : 'Key Details:'}
+                      </h4>
+                      <ul className="space-y-1">
+                        {(round.preparation || round.details || []).map((item: string, prepIndex: number) => (
+                          <li key={prepIndex} className="text-xs text-gray-400 flex items-start">
+                            <span className="w-1 h-1 bg-accent-400 rounded-full mr-2 mt-1.5"></span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -203,7 +222,7 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
             </h2>
 
             <div className="space-y-8">
-              {playbookData.patterns.map((pattern: any) => (
+              {(playbookData.patterns || []).map((pattern: any) => (
                 <div key={pattern.category} className="bg-dark-900 border border-gray-800 rounded-xl p-8">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
@@ -273,7 +292,7 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
             </h2>
 
             <div className="space-y-8">
-              {playbookData.prep.map((phase: any) => (
+              {(playbookData.prep || playbookData.preparationStrategy?.weeklyFocus || []).map((phase: any) => (
                 <div key={phase.phase} className="bg-dark-900 border border-gray-800 rounded-xl p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <div className={`
@@ -285,11 +304,11 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
                       {phase.phase === 'week-before' ? '1W' :
                        phase.phase === 'day-before' ? '1D' : '0D'}
                     </div>
-                    <h3 className="text-2xl font-bold text-white">{phase.title}</h3>
+                    <h3 className="text-2xl font-bold text-white">{phase.title || `Week ${phase.week} Focus`}</h3>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {phase.tasks.map((task: any, taskIndex: number) => (
+                    {(phase.tasks || []).map((task: any, taskIndex: number) => (
                       <div
                         key={taskIndex}
                         className={`
@@ -300,20 +319,24 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
                         `}
                       >
                         <div className="flex items-start justify-between mb-3">
-                          <h4 className="font-medium text-gray-200 leading-tight">{task.task}</h4>
-                          <span className={`
-                            text-xs px-2 py-1 rounded
-                            ${task.priority === 'high' ? 'bg-red-500 text-white' :
-                              task.priority === 'medium' ? 'bg-yellow-500 text-black' :
-                              'bg-gray-600 text-white'}
-                          `}>
-                            {task.priority}
-                          </span>
+                          <h4 className="font-medium text-gray-200 leading-tight">{task.task || task}</h4>
+                          {task.priority && (
+                            <span className={`
+                              text-xs px-2 py-1 rounded
+                              ${task.priority === 'high' ? 'bg-red-500 text-white' :
+                                task.priority === 'medium' ? 'bg-yellow-500 text-black' :
+                                'bg-gray-600 text-white'}
+                            `}>
+                              {task.priority}
+                            </span>
+                          )}
                         </div>
 
-                        <div className="text-sm text-gray-400 mb-3">
-                          ⏱ {task.timeRequired}
-                        </div>
+                        {task.timeRequired && (
+                          <div className="text-sm text-gray-400 mb-3">
+                            ⏱ {task.timeRequired}
+                          </div>
+                        )}
 
                         {task.resources && (
                           <div>
@@ -353,7 +376,7 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
                 Practice React Questions
               </Link>
               <Link
-                href="/tree/usecallback-tree"
+                href="/tree/usecallback"
                 className="px-6 py-3 bg-accent-600 hover:bg-accent-700 text-white font-semibold rounded-lg transition-colors"
               >
                 Try Question Trees
@@ -369,9 +392,6 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
 export function generateStaticParams() {
   return [
     { company: 'rippling' },
-    { company: 'meta' },
-    { company: 'google' },
-    { company: 'netflix' },
-    { company: 'airbnb' },
+    { company: 'swiggy' },
   ];
 }

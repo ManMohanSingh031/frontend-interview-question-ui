@@ -1,0 +1,362 @@
+{
+  "id": "usememo-vs-usecallback",
+  "root": "q1",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "I have a component that renders a list of 1000 users. When I click a button to toggle a theme, the entire list re-renders slowly. Should I use useMemo or useCallback here?",
+      "intent": "Test if they understand the fundamental difference between memoizing values vs functions",
+      "expectedSignal": "Should ask clarifying questions about what's expensive (data transformation vs event handlers), mentions useMemo for expensive computations",
+      "followUpIds": ["q2a", "q2b", "q2c"]
+    },
+    {
+      "id": "q2a",
+      "question": "Good, you mentioned useMemo for the expensive list computation. Now, each user item has an onClick handler. How would you optimize that?",
+      "intent": "Test understanding of useCallback for stable function references",
+      "expectedSignal": "Mentions useCallback to prevent child re-renders, understands function identity problem",
+      "followUpIds": ["q3a", "q3b"]
+    },
+    {
+      "id": "q2b",
+      "question": "You said useCallback - but I'm not passing any functions as props. The expensive part is filtering and sorting the user data. Explain your reasoning.",
+      "intent": "Catch incorrect application - they should pivot to useMemo for data computation",
+      "expectedSignal": "Corrects themselves, explains useMemo is for expensive calculations, not function stability",
+      "followUpIds": ["q3c", "q3d"]
+    },
+    {
+      "id": "q2c",
+      "question": "You asked good clarifying questions. Let's say the expensive part is both: filtering 1000 users AND each user has an onSelect handler passed to child components.",
+      "intent": "Test ability to use both hooks appropriately in same scenario",
+      "expectedSignal": "Suggests useMemo for filtering + useCallback for event handlers, understands both are needed",
+      "followUpIds": ["q4a", "q4b"]
+    },
+    {
+      "id": "q3a",
+      "question": "Here's the catch - I wrap each onClick handler like this: onClick={() => handleUserClick(user.id)}. Will useCallback help here?",
+      "intent": "Test understanding of inline function creation defeating useCallback",
+      "expectedSignal": "Recognizes arrow function creates new function each render, defeating useCallback purpose",
+      "followUpIds": ["q5a", "q5b"]
+    },
+    {
+      "id": "q3b",
+      "question": "You mentioned useCallback prevents child re-renders. But what if the child components aren't memoized with React.memo?",
+      "intent": "Test if they understand useCallback is useless without React.memo on children",
+      "expectedSignal": "Explains that useCallback only helps if child components are wrapped in React.memo",
+      "followUpIds": ["q5c", "q5d"]
+    },
+    {
+      "id": "q3c",
+      "question": "Correct - useMemo for the data. Now show me the dependency array for useMemo when filtering users by searchTerm and sortBy.",
+      "intent": "Test understanding of dependency arrays and what should be included",
+      "expectedSignal": "Includes searchTerm, sortBy, and users array in dependencies",
+      "followUpIds": ["q6a", "q6b"]
+    },
+    {
+      "id": "q3d",
+      "question": "Right, but what if this filtering happens in every component that shows users? Is useMemo still the best approach?",
+      "intent": "Test understanding of when to lift computation up or use different patterns",
+      "expectedSignal": "Mentions lifting state up, custom hooks, or caching at higher level",
+      "followUpIds": ["q6c"]
+    },
+    {
+      "id": "q4a",
+      "question": "Good - both hooks. But Profiler shows this component still re-rendering 30 times per second in production. Screen-share your debugging process - what specific DevTools features would you use?",
+      "intent": "Test real debugging workflow with production scenarios",
+      "expectedSignal": "Demonstrates Profiler flamegraph, component highlighting, performance timeline correlation, knows 'why did this render'",
+      "followUpIds": ["q7a", "q7b"]
+    },
+    {
+      "id": "q4b",
+      "question": "You said both hooks. Here's my code: useMemo(() => users.filter(u => u.active), []). Spot the issue.",
+      "intent": "Test if they catch missing dependencies in useMemo",
+      "expectedSignal": "Identifies that 'users' is missing from dependency array",
+      "followUpIds": ["q7c"]
+    },
+    {
+      "id": "q5a",
+      "question": "Exactly - arrow functions defeat useCallback. How would you fix the onClick handler to make useCallback effective?",
+      "intent": "Test practical solutions for event handlers with parameters",
+      "expectedSignal": "Suggests data attributes, custom hooks, or partial application patterns",
+      "followUpIds": ["q8a"]
+    },
+    {
+      "id": "q5b",
+      "question": "You got the arrow function problem. But what if I need to pass different parameters to each handler? Show me the pattern.",
+      "intent": "Test knowledge of advanced useCallback patterns with parameters",
+      "expectedSignal": "Shows currying, data attributes, or useCallback with partial application",
+      "followUpIds": ["q8b"]
+    },
+    {
+      "id": "q5c",
+      "question": "Correct about React.memo. But what happens if the child component has its own useState that changes frequently?",
+      "intent": "Test understanding of when React.memo breaks down",
+      "expectedSignal": "Explains that internal state changes still cause re-renders regardless of props",
+      "followUpIds": ["q8c"]
+    },
+    {
+      "id": "q5d",
+      "question": "Good point about React.memo. Now what if the parent passes an object prop like style={{color: theme.primary}}?",
+      "intent": "Test understanding of object identity breaking memoization",
+      "expectedSignal": "Identifies inline object creation breaks React.memo, suggests useMemo for style object",
+      "followUpIds": ["q8d"]
+    },
+    {
+      "id": "q6a",
+      "question": "Good dependency array. But what if users is a prop from parent that's a new array every render?",
+      "intent": "Test understanding of upstream optimization needs",
+      "expectedSignal": "Recognizes parent needs to memoize the users array, or use stable reference",
+      "followUpIds": ["q9a"]
+    },
+    {
+      "id": "q6b",
+      "question": "Right dependencies. Here's production: useMemo runs every render despite correct deps. Open DevTools and walk me through your exact debugging steps to find why memoization is failing.",
+      "intent": "Test hands-on debugging with real tools",
+      "expectedSignal": "Uses React DevTools Profiler, checks 'Highlight updates', logs deps, understands Object.is comparison failures",
+      "followUpIds": ["q9b"]
+    },
+    {
+      "id": "q6c",
+      "question": "Smart - lifting state up. But what if 5 different components need different filtered views of the same data?",
+      "intent": "Test advanced patterns like selectors or data layer optimization",
+      "expectedSignal": "Mentions selector patterns, caching layer, or state management solution",
+      "followUpIds": ["q9c"]
+    },
+    {
+      "id": "q7a",
+      "question": "You mentioned dependency arrays. Here's the tricky one: useCallback(() => api.updateUser(userId), [userId]). The API call object is created fresh every render. Problem?",
+      "intent": "Test understanding of closure captures and object creation in dependencies",
+      "expectedSignal": "Identifies that 'api' object creation affects callback stability if api is recreated",
+      "followUpIds": ["q10a"]
+    },
+    {
+      "id": "q7b",
+      "question": "Good debugging instinct. I found that parent component passes config={{theme: 'dark'}} inline. How does this break child memoization?",
+      "intent": "Test understanding of prop drilling and object identity",
+      "expectedSignal": "Explains inline object creation makes React.memo useless, suggests memoizing config object",
+      "followUpIds": ["q10b"]
+    },
+    {
+      "id": "q7c",
+      "question": "Correct - missing users dependency. But adding it makes useMemo re-run on every users array change. How do you handle this trade-off?",
+      "intent": "Test understanding of when memoization isn't the right solution",
+      "expectedSignal": "Discusses trade-offs, might suggest different data structure or caching strategy",
+      "followUpIds": ["q10c"]
+    },
+    {
+      "id": "q8a",
+      "question": "Good solution. Now scale this: 1000 list items, each with multiple event handlers (onClick, onHover, onFocus). Performance strategy?",
+      "intent": "Test understanding of event delegation vs individual memoization",
+      "expectedSignal": "Suggests event delegation on parent, or virtualization to limit DOM nodes",
+      "followUpIds": ["q11a"]
+    },
+    {
+      "id": "q8b",
+      "question": "Nice pattern. But now each item needs different callback behavior based on user.role. How do you optimize this?",
+      "intent": "Test advanced optimization with conditional logic",
+      "expectedSignal": "Suggests strategy pattern, lookup tables, or component composition",
+      "followUpIds": ["q11b"]
+    },
+    {
+      "id": "q8c",
+      "question": "Exactly - internal state breaks memoization. What if the child needs to respond to external data changes but avoid prop-based re-renders?",
+      "intent": "Test understanding of refs, external subscriptions, or state management",
+      "expectedSignal": "Mentions useRef for stable values, external state, or subscription patterns",
+      "followUpIds": ["q11c"]
+    },
+    {
+      "id": "q8d",
+      "question": "Right about inline objects. Now I have 20 different style objects based on theme. All need memoization. Better pattern?",
+      "intent": "Test scaling memoization strategies and architecture decisions",
+      "expectedSignal": "Suggests CSS-in-JS with theme provider, CSS variables, or pre-computed style maps",
+      "followUpIds": ["q11d"]
+    },
+    {
+      "id": "q9a",
+      "question": "Correct about parent optimization. But what if the parent can't be changed (third-party component)? Your workaround?",
+      "intent": "Test pragmatic solutions when ideal fixes aren't possible",
+      "expectedSignal": "Suggests wrapper component, deep comparison hooks, or accepting the limitation",
+      "followUpIds": ["q12a"]
+    },
+    {
+      "id": "q9b",
+      "question": "Good debugging approach. The profiler shows useMemo dependencies changing but they look identical. What's likely happening?",
+      "intent": "Test understanding of Object.is comparison and reference equality",
+      "expectedSignal": "Explains React uses Object.is, reference changes vs deep equality issues",
+      "followUpIds": ["q12b"]
+    },
+    {
+      "id": "q9c",
+      "question": "Smart - selector pattern. But now selectors are expensive and running on every state change. Optimization strategy?",
+      "intent": "Test advanced state management and selector optimization",
+      "expectedSignal": "Mentions memoized selectors, reselect library, or normalized state structure",
+      "followUpIds": ["q12c"]
+    },
+    {
+      "id": "q10a",
+      "question": "Exactly - api object affects callback stability. In a real app, api comes from useContext. How do you stabilize this?",
+      "intent": "Test understanding of context optimization and stable references",
+      "expectedSignal": "Suggests stable context values, separating data from methods, or useRef for API",
+      "followUpIds": ["q13a"]
+    },
+    {
+      "id": "q10b",
+      "question": "Right about inline objects. Your users complain the UI feels 'laggy' during state updates. You have useMemo/useCallback optimized. What React 18+ feature would you try next?",
+      "intent": "Test knowledge of when concurrent features solve problems memoization can't",
+      "expectedSignal": "Suggests useTransition for non-urgent updates, explains that memoization doesn't help with blocking updates, understands concurrent rendering priority",
+      "followUpIds": ["q13b"]
+    },
+    {
+      "id": "q10c",
+      "question": "Good understanding of trade-offs. When would you choose NOT to use useMemo/useCallback despite having expensive operations?",
+      "intent": "Test judgment about when optimization is counterproductive",
+      "expectedSignal": "Memory overhead, dependency tracking cost, code complexity vs performance gain analysis",
+      "followUpIds": ["q13c"]
+    },
+    {
+      "id": "q11a",
+      "question": "Event delegation is smart. But some handlers need access to React state/props. How do you bridge that gap?",
+      "intent": "Test integration of DOM patterns with React patterns",
+      "expectedSignal": "Data attributes, custom events, or hybrid approach with limited memoized handlers",
+      "followUpIds": ["q14a"]
+    },
+    {
+      "id": "q11b",
+      "question": "Good strategy pattern thinking. Now this component is used in 10 different pages with different optimization needs. Architecture?",
+      "intent": "Test component design for reusability and performance",
+      "expectedSignal": "Compound components, render props, or configuration-driven optimization",
+      "followUpIds": ["q14b"]
+    },
+    {
+      "id": "q11c",
+      "question": "Right about external subscriptions. But what about server state that updates frequently? useMemo/useCallback strategy?",
+      "intent": "Test understanding of server state vs client state optimization",
+      "expectedSignal": "Mentions React Query/SWR patterns, or selective subscription optimization",
+      "followUpIds": ["q14c"]
+    },
+    {
+      "id": "q11d",
+      "question": "CSS-in-JS themes are good. But now you're building a design system used by 50+ teams. Performance considerations?",
+      "intent": "Test scalable architecture and performance at organization level",
+      "expectedSignal": "Build-time optimization, CSS extraction, token-based systems, performance budgets",
+      "followUpIds": ["q14d"]
+    },
+    {
+      "id": "q12a",
+      "question": "Pragmatic approach. You've accepted some re-renders but want to minimize impact. Measurement strategy?",
+      "intent": "Test performance monitoring and acceptable performance thresholds",
+      "expectedSignal": "Core Web Vitals, user-centric metrics, performance budgets, monitoring setup",
+      "followUpIds": ["q15a"]
+    },
+    {
+      "id": "q12b",
+      "question": "Perfect - Object.is understanding. Now open React DevTools Profiler. I want you to show me exactly how you'd identify which props are causing unnecessary re-renders in this production component.",
+      "intent": "Test practical debugging skills with actual tools",
+      "expectedSignal": "Demonstrates Profiler usage, prop tracking, flamegraph analysis, knows highlight updates feature",
+      "followUpIds": ["q15b"]
+    },
+    {
+      "id": "q12c",
+      "question": "Memoized selectors - excellent. You're now the tech lead reviewing PRs with useMemo/useCallback usage. What's your review checklist?",
+      "intent": "Test systematic review approach and teaching ability",
+      "expectedSignal": "Practical checklist covering common mistakes, performance measurement, code clarity",
+      "followUpIds": ["q15c"]
+    },
+    {
+      "id": "q13a",
+      "question": "Great context optimization knowledge. One final architectural question: How do you balance useMemo/useCallback optimization with code readability for your team?",
+      "intent": "Test leadership thinking about team productivity vs performance",
+      "expectedSignal": "Team guidelines, performance budgets, documentation, tooling to make optimization easier",
+      "followUpIds": []
+    },
+    {
+      "id": "q13b",
+      "question": "Excellent systematic approach. You've shown strong performance optimization skills. How do you ensure these optimizations don't regress over time?",
+      "intent": "Test long-term thinking about performance maintenance",
+      "expectedSignal": "Performance monitoring, CI performance budgets, documentation, team training",
+      "followUpIds": []
+    },
+    {
+      "id": "q13c",
+      "question": "Wise judgment about when NOT to optimize. That shows senior-level thinking. How do you communicate performance trade-offs to product managers?",
+      "intent": "Test communication skills and business context understanding",
+      "expectedSignal": "User impact metrics, business value, technical debt communication, priority frameworks",
+      "followUpIds": []
+    },
+    {
+      "id": "q14a",
+      "question": "Smart hybrid approach. You've demonstrated deep React performance knowledge. Final question: What's your biggest lesson learned about premature optimization?",
+      "intent": "Test wisdom from experience and balanced perspective",
+      "expectedSignal": "Specific examples of over-optimization, measurement-first approach, user focus",
+      "followUpIds": []
+    },
+    {
+      "id": "q14b",
+      "question": "Excellent component design thinking. You clearly understand performance at scale. What performance advice would you give to a team building their first large React app?",
+      "intent": "Test mentoring ability and practical guidance for teams",
+      "expectedSignal": "Start simple, measure first, common patterns, tooling recommendations",
+      "followUpIds": []
+    },
+    {
+      "id": "q14c",
+      "question": "Great server state understanding. You've shown expertise across client and server optimization. How do you stay current with React performance best practices?",
+      "intent": "Test continuous learning approach and community engagement",
+      "expectedSignal": "Specific resources, community involvement, experimental approach, measurement focus",
+      "followUpIds": []
+    },
+    {
+      "id": "q14d",
+      "question": "Your React app's Core Web Vitals show 4.2s Largest Contentful Paint in production. DevTools Profiler indicates useMemo computations blocking rendering. Show me your systematic debugging approach.",
+      "intent": "Test production performance debugging connecting React optimization to real user metrics",
+      "expectedSignal": "Uses Lighthouse + React Profiler, identifies blocking computations, measures actual user impact, implements incremental fixes with measurement",
+      "weakAnswer": "Would just reduce useMemo usage or guess about the bottleneck",
+      "strongAnswer": "Correlates LCP with React render timing, uses Profiler's flame graph to identify expensive memoizations, measures before/after impact on Core Web Vitals, implements progressive enhancement approach",
+      "followUpIds": ["q15d"]
+    },
+    {
+      "id": "q15d",
+      "question": "Production monitoring shows 40% of users experiencing >100ms blocked main thread during useMemo recalculations. Your debugging strategy?",
+      "intent": "Test real-world performance monitoring and React optimization debugging in production environment",
+      "expectedSignal": "Uses RUM data correlation with React profiling, identifies specific useMemo causing blocking, implements time-slicing or breaks computation into chunks",
+      "weakAnswer": "Would just remove useMemo or make generic optimizations",
+      "strongAnswer": "Correlates RUM data with React DevTools, identifies specific dependency changes causing expensive recalculation, implements useTransition or chunks computation, measures main thread impact",
+      "followUpIds": ["q16d"]
+    },
+    {
+      "id": "q16d",
+      "question": "Chrome DevTools shows your useCallback is somehow taking 95ms to execute during each render. This should be instant. Walk me through your investigation.",
+      "intent": "Test debugging skills for impossible scenarios - useCallback shouldn't execute during render",
+      "expectedSignal": "Identifies misconception - useCallback doesn't execute, callback itself does. Debugs what's actually causing the 95ms (likely expensive computation in dependency array or callback being called immediately)",
+      "weakAnswer": "Accepts that useCallback is slow or tries to optimize useCallback itself",
+      "strongAnswer": "Clarifies that useCallback only creates/returns function reference. Investigates what's actually running - likely expensive computation in deps or callback invocation in render, not callback creation",
+      "followUpIds": ["q17d"]
+    },
+    {
+      "id": "q17d",
+      "question": "Perfect diagnostic thinking! You've shown the systematic debugging approach and React internals knowledge we need for senior performance work.",
+      "intent": "Positive closure acknowledging debugging mastery and React understanding",
+      "expectedSignal": "Professional acknowledgment of advanced debugging skills and React performance expertise",
+      "followUpIds": []
+    },
+    {
+      "id": "q15a",
+      "question": "Strong monitoring approach. You've demonstrated comprehensive performance knowledge. Any final thoughts on balancing developer experience with performance?",
+      "intent": "Test holistic thinking about developer productivity vs optimization",
+      "expectedSignal": "Tooling, automation, team processes, pragmatic optimization approach",
+      "followUpIds": []
+    },
+    {
+      "id": "q15b",
+      "question": "Excellent teaching ability. You've shown you can work at any level from implementation to mentoring. Thank you for the detailed discussion.",
+      "intent": "Closing acknowledgment of comprehensive knowledge demonstration",
+      "expectedSignal": "Professional closure, confidence in technical depth and communication skills",
+      "followUpIds": []
+    },
+    {
+      "id": "q15c",
+      "question": "Thorough review approach. You've demonstrated both individual contributor and tech lead capabilities. This has been a comprehensive technical discussion.",
+      "intent": "Closing acknowledgment of leadership and technical skills",
+      "expectedSignal": "Professional closure, demonstrated ability to scale from coding to leading",
+      "followUpIds": []
+    }
+  ]
+}

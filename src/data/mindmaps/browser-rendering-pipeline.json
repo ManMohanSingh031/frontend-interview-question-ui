@@ -1,0 +1,110 @@
+{
+  "id": "browser-rendering-pipeline",
+  "title": "Browser Rendering Pipeline",
+  "summary": "Deep-dive into browser rendering mechanics, performance bottlenecks, and optimization strategies for senior frontend interviews",
+  "nodes": [
+    {
+      "id": "central",
+      "title": "Browser Rendering Pipeline",
+      "description": "Critical path from HTML/CSS to pixels on screen",
+      "type": "central",
+      "position": { "x": 400, "y": 300 },
+      "connections": ["parsing", "cssom", "render-tree", "layout", "paint", "composite"],
+      "color": "#0891b2"
+    },
+    {
+      "id": "parsing",
+      "title": "HTML Parsing",
+      "description": "Tokenization, DOM construction, script blocking behavior",
+      "type": "branch",
+      "position": { "x": 200, "y": 150 },
+      "connections": ["central"],
+      "color": "#3b82f6"
+    },
+    {
+      "id": "cssom",
+      "title": "CSS Parsing",
+      "description": "CSSOM construction, render-blocking CSS resolution",
+      "type": "branch",
+      "position": { "x": 600, "y": 150 },
+      "connections": ["central"],
+      "color": "#8b5cf6"
+    },
+    {
+      "id": "render-tree",
+      "title": "Render Tree",
+      "description": "DOM + CSSOM merge, computed styles calculation",
+      "type": "branch",
+      "position": { "x": 150, "y": 450 },
+      "connections": ["central"],
+      "color": "#10b981"
+    },
+    {
+      "id": "layout",
+      "title": "Layout/Reflow",
+      "description": "Element positioning, box model calculations, forced synchronous layout",
+      "type": "branch",
+      "position": { "x": 400, "y": 500 },
+      "connections": ["central"],
+      "color": "#f59e0b"
+    },
+    {
+      "id": "paint",
+      "title": "Paint",
+      "description": "Pixel filling, layer creation, paint optimization",
+      "type": "branch",
+      "position": { "x": 650, "y": 450 },
+      "connections": ["central"],
+      "color": "#ef4444"
+    },
+    {
+      "id": "composite",
+      "title": "Composite",
+      "description": "Layer composition, GPU acceleration, transform optimizations",
+      "type": "branch",
+      "position": { "x": 600, "y": 350 },
+      "connections": ["central"],
+      "color": "#6366f1"
+    }
+  ],
+  "traps": [
+    {
+      "misconception": "DOM changes always trigger full page rerender",
+      "correction": "Only affected elements and their paint layers re-render",
+      "explanation": "Browser optimizes by only repainting changed regions and promoting elements to separate layers"
+    },
+    {
+      "misconception": "CSS animations are always GPU accelerated",
+      "correction": "Only transform and opacity animations use GPU by default",
+      "explanation": "Other properties like width, height, top, left trigger layout and paint on main thread"
+    }
+  ],
+  "followups": [
+    {
+      "question": "How do you debug forced synchronous layout in DevTools Performance panel?",
+      "intent": "Test practical performance debugging skills",
+      "signal": "Mentions reading layout, calculating styles, checking for DOM queries after style changes",
+      "difficulty": "hard"
+    },
+    {
+      "question": "Explain the difference between will-change and transform: translateZ(0)",
+      "intent": "Understanding of layer promotion techniques",
+      "signal": "Discusses compositor layer creation, memory trade-offs, when to avoid over-promotion",
+      "difficulty": "medium"
+    }
+  ],
+  "usecases": [
+    {
+      "title": "Animation Performance Debugging",
+      "description": "Identifying and fixing janky animations that block the main thread",
+      "example": "Use transform/opacity instead of left/top, avoid layout thrashing during scroll",
+      "complexity": "high"
+    },
+    {
+      "title": "Critical Rendering Path Optimization",
+      "description": "Minimizing render-blocking resources for faster page loads",
+      "example": "Inline critical CSS, defer non-critical resources, preload key assets",
+      "complexity": "medium"
+    }
+  ]
+}
