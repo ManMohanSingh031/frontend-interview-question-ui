@@ -78,7 +78,15 @@ export function TopicChip({
     return sizes[s as keyof typeof sizes];
   };
 
-  const categoryColors = getCategoryColor(category);
+  // Normalize category to lowercase and provide fallback
+  const normalizedCategory = category?.toLowerCase() as TopicCategory;
+  const categoryColors = getCategoryColor(normalizedCategory) || {
+    bg: 'bg-gray-500',
+    border: 'border-gray-400',
+    text: 'text-gray-400',
+    activeBg: 'bg-gray-500',
+    activeText: 'text-white'
+  };
   const sizeClasses = getSizeClasses(size);
 
   const getVariantClasses = () => {

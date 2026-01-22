@@ -1,0 +1,410 @@
+{
+  "id": "swiggy",
+  "company": "Swiggy",
+  "logo": "/logos/swiggy.svg",
+  "industry": "Food Delivery & Quick Commerce",
+  "headquarters": "Bangalore, India",
+  "employees": "5000+",
+  "founded": 2014,
+  "lastUpdated": "2024-01-15",
+
+  "frontendOrg": {
+    "overview": "Swiggy's frontend org is split between consumer-facing apps (Swiggy App, Instamart) and internal tools (Partner Dashboard, Operations). Heavy focus on React Native for mobile, React for web. Strong emphasis on performance given India's diverse network conditions.",
+    "teamStructure": {
+      "consumerApps": "Mobile-first team handling main Swiggy app, Instamart, and web platform",
+      "partnerTools": "Dashboard and tools for restaurant partners, delivery executives",
+      "platform": "Design system, shared libraries, performance tooling",
+      "infra": "Micro-frontends, deployment pipelines, monitoring"
+    },
+    "techStack": {
+      "mobile": ["React Native 0.73+", "TypeScript 5", "Redux Toolkit", "TanStack Query", "Expo 50+"],
+      "web": ["React 18", "Next.js 14", "TypeScript", "Tailwind CSS", "Vite"],
+      "state": ["Redux Toolkit", "TanStack Query", "Zustand", "Jotai (newer projects)"],
+      "testing": ["Vitest", "React Testing Library", "Playwright", "Detox"],
+      "infra": ["Turborepo", "Storybook 8", "GitHub Actions", "Vercel"]
+    },
+    "scale": "40M+ monthly active users, 3-5 second load time targets, 150+ cities"
+  },
+
+  "interviewRounds": [
+    {
+      "round": 1,
+      "title": "Coding Round",
+      "duration": "60-90 minutes",
+      "format": "Live coding with interviewer",
+      "focus": "JavaScript fundamentals, React basics, problem-solving approach",
+      "details": [
+        "Medium-level coding problems (not LeetCode style)",
+        "React component implementation from scratch",
+        "Debugging existing code with intentional bugs",
+        "Basic algorithm questions (array manipulation, string processing)"
+      ]
+    },
+    {
+      "round": 2,
+      "title": "Frontend Deep Dive",
+      "duration": "60-75 minutes",
+      "format": "Technical discussion + code review",
+      "focus": "React ecosystem, performance, browser internals",
+      "details": [
+        "React lifecycle, hooks, context patterns",
+        "Performance optimization strategies",
+        "Browser rendering pipeline questions",
+        "Code review of candidate's previous work",
+        "CSS specificity, flexbox, responsive design"
+      ]
+    },
+    {
+      "round": 3,
+      "title": "System Design",
+      "duration": "75-90 minutes",
+      "format": "Whiteboarding + architecture discussion",
+      "focus": "Frontend system design, component architecture",
+      "details": [
+        "Design food delivery app frontend architecture",
+        "Real-time order tracking implementation",
+        "Mobile-first responsive design decisions",
+        "State management at scale",
+        "API integration patterns"
+      ]
+    },
+    {
+      "round": 4,
+      "title": "Manager Round",
+      "duration": "45-60 minutes",
+      "format": "Behavioral + technical leadership",
+      "focus": "Past experience, cultural fit, technical decisions",
+      "details": [
+        "Past project deep-dive with technical challenges",
+        "Team collaboration and mentoring experience",
+        "Handling tight deadlines and changing requirements",
+        "Understanding of Swiggy's business and technical challenges"
+      ]
+    }
+  ],
+
+  "coreTopics": {
+    "mandatoryTopics": [
+      {
+        "topic": "React Ecosystem",
+        "importance": "critical",
+        "details": [
+          "React 18+ concurrent features (useTransition, useDeferredValue, Suspense)",
+          "Hooks optimization and debugging with DevTools Profiler",
+          "Server Components vs Client Components architecture",
+          "Modern state management patterns (server state vs client state)",
+          "Performance monitoring in production (Core Web Vitals, RUM)"
+        ]
+      },
+      {
+        "topic": "Performance Optimization",
+        "importance": "critical",
+        "details": [
+          "Bundle splitting and lazy loading",
+          "Image optimization strategies",
+          "Network request optimization",
+          "Memory leak prevention",
+          "Core Web Vitals understanding"
+        ]
+      },
+      {
+        "topic": "Mobile-First Development",
+        "importance": "high",
+        "details": [
+          "Responsive design principles",
+          "Touch interactions and gestures",
+          "Progressive Web App concepts",
+          "Offline functionality patterns",
+          "React Native bridge understanding (bonus)"
+        ]
+      },
+      {
+        "topic": "State Management",
+        "importance": "high",
+        "details": [
+          "TanStack Query patterns and caching strategies",
+          "Zustand vs Jotai for modern state management",
+          "React 18 concurrent rendering impact on state updates",
+          "Optimistic updates with error rollback",
+          "Real-time synchronization with WebSocket state management"
+        ]
+      }
+    ],
+    "bonusTopics": [
+      {
+        "topic": "Micro-frontends",
+        "details": ["Module federation", "Independent deployment", "Shared state management"]
+      },
+      {
+        "topic": "Testing Strategy",
+        "details": ["Unit vs integration testing", "E2E testing for critical flows", "Visual regression testing"]
+      },
+      {
+        "topic": "Developer Experience",
+        "details": ["Build optimization", "Hot reloading", "Debugging techniques"]
+      }
+    ]
+  },
+
+  "systemDesignProblems": [
+    {
+      "title": "Design Swiggy Food Ordering Flow",
+      "description": "Design the frontend architecture for restaurant listing, menu browsing, cart, and checkout",
+      "keyAspects": [
+        "Restaurant search and filtering performance",
+        "Cart state management across app",
+        "Real-time price updates",
+        "Location-based restaurant display",
+        "Checkout flow optimization"
+      ],
+      "evaluationCriteria": [
+        "Component hierarchy planning",
+        "State management decisions",
+        "API design and caching",
+        "Error handling strategies",
+        "Mobile performance considerations"
+      ]
+    },
+    {
+      "title": "Build Real-time Order Tracking",
+      "description": "Design frontend for live order tracking from restaurant to delivery",
+      "keyAspects": [
+        "WebSocket integration for real-time updates",
+        "Map integration and performance",
+        "Notification system",
+        "Offline handling",
+        "Battery optimization"
+      ],
+      "evaluationCriteria": [
+        "Real-time data handling",
+        "Connection resilience",
+        "User experience design",
+        "Performance optimization",
+        "Error recovery mechanisms"
+      ]
+    },
+    {
+      "title": "Design Restaurant Partner Dashboard",
+      "description": "Create admin interface for restaurant partners to manage menu, orders, analytics",
+      "keyAspects": [
+        "Data visualization for analytics",
+        "Complex form handling (menu management)",
+        "Role-based access control",
+        "Bulk operations",
+        "Real-time order management"
+      ],
+      "evaluationCriteria": [
+        "Data-heavy UI performance",
+        "Form state management",
+        "User role handling",
+        "Scalable component design",
+        "Accessibility considerations"
+      ]
+    }
+  ],
+
+  "followUpPatterns": [
+    {
+      "scenario": "Candidate mentions Redux",
+      "followUps": [
+        "Show me how you'd debug Redux state updates causing performance issues using DevTools",
+        "Walk me through migrating from Redux to Zustand in a production app with 50+ components",
+        "Demonstrate how React 18 concurrent features interact with Redux state updates",
+        "How do you handle optimistic updates that fail in a food delivery context? Show me the code."
+      ]
+    },
+    {
+      "scenario": "Candidate talks about performance optimization",
+      "followUps": [
+        "How do you measure performance in production?",
+        "What's your approach to bundle size optimization?",
+        "Explain the difference between SSR and SSG for our use case",
+        "How would you handle slow 3G networks in India?"
+      ]
+    },
+    {
+      "scenario": "Candidate designs component architecture",
+      "followUps": [
+        "How would this scale to 50+ restaurants on a page?",
+        "What happens if the cart API is slow?",
+        "How do you handle conflicting state updates?",
+        "What's your error boundary strategy?"
+      ]
+    },
+    {
+      "scenario": "Candidate mentions testing",
+      "followUps": [
+        "How do you test components with external API dependencies?",
+        "What's your strategy for testing user interactions?",
+        "How do you ensure critical user flows don't break?",
+        "What tools do you use for performance testing?"
+      ]
+    }
+  ],
+
+  "evaluationCriteria": {
+    "technicalSkills": {
+      "jsReactFundamentals": {
+        "weight": "25%",
+        "signals": [
+          "Understands React lifecycle and hooks deeply",
+          "Can explain closure, context, and async behavior",
+          "Knows browser APIs and performance implications",
+          "Demonstrates debugging skills"
+        ]
+      },
+      "systemDesign": {
+        "weight": "25%",
+        "signals": [
+          "Thinks about user experience first",
+          "Considers mobile and network constraints",
+          "Plans for error states and edge cases",
+          "Designs scalable component architecture"
+        ]
+      },
+      "performanceOptimization": {
+        "weight": "20%",
+        "signals": [
+          "Understands critical rendering path",
+          "Plans for bundle optimization",
+          "Considers real-world network conditions",
+          "Knows when NOT to optimize"
+        ]
+      },
+      "problemSolving": {
+        "weight": "20%",
+        "signals": [
+          "Asks clarifying questions",
+          "Breaks down complex problems",
+          "Considers trade-offs explicitly",
+          "Demonstrates practical experience"
+        ]
+      },
+      "codeQuality": {
+        "weight": "10%",
+        "signals": [
+          "Writes clean, readable code",
+          "Considers maintainability",
+          "Uses appropriate abstractions",
+          "Follows consistent patterns"
+        ]
+      }
+    },
+    "redFlags": [
+      "Cannot explain why they made specific technology choices",
+      "Focuses only on happy path, ignores error cases",
+      "Over-engineers simple problems",
+      "Cannot articulate performance trade-offs",
+      "No experience with mobile-first design",
+      "Unrealistic about India's network constraints"
+    ]
+  },
+
+  "preparationStrategy": {
+    "timeframe": "4-6 weeks preparation recommended",
+    "weeklyFocus": [
+      {
+        "week": 1,
+        "focus": "React fundamentals and hooks mastery",
+        "tasks": [
+          "Review React lifecycle, hooks, and context patterns",
+          "Practice building components from scratch",
+          "Understand React 18 features (Suspense, Concurrent features)",
+          "Study performance optimization techniques"
+        ]
+      },
+      {
+        "week": 2,
+        "focus": "State management and API integration",
+        "tasks": [
+          "Deep dive into Redux Toolkit patterns",
+          "Practice React Query for server state",
+          "Build real-time features with WebSockets",
+          "Study optimistic updates and error handling"
+        ]
+      },
+      {
+        "week": 3,
+        "focus": "System design and architecture",
+        "tasks": [
+          "Practice frontend system design problems",
+          "Study micro-frontend patterns",
+          "Design mobile-first applications",
+          "Focus on food delivery domain problems"
+        ]
+      },
+      {
+        "week": 4,
+        "focus": "Performance and mobile optimization",
+        "tasks": [
+          "Study Core Web Vitals and measurement",
+          "Practice bundle optimization techniques",
+          "Learn Progressive Web App concepts",
+          "Understand India-specific performance challenges"
+        ]
+      }
+    ],
+    "practiceProjects": [
+      {
+        "title": "Food Delivery Clone",
+        "description": "Build restaurant listing with search, cart, and checkout",
+        "keyFeatures": ["Real-time search", "Cart persistence", "Location detection", "Responsive design"],
+        "timeEstimate": "2-3 weeks"
+      },
+      {
+        "title": "Order Tracking Dashboard",
+        "description": "Admin interface with real-time order updates",
+        "keyFeatures": ["WebSocket integration", "Data visualization", "Bulk operations", "Error handling"],
+        "timeEstimate": "1-2 weeks"
+      }
+    ]
+  },
+
+  "specificTips": {
+    "technicalPreparation": [
+      "Focus heavily on mobile performance - Swiggy cares about 3G networks",
+      "Understand food delivery domain - delivery tracking, location services, payment flows",
+      "Practice system design with real-world constraints (offline, slow networks)",
+      "Be ready to discuss React Native if applying for mobile-focused roles"
+    ],
+    "interviewDay": [
+      "Ask about network constraints and target devices",
+      "Discuss trade-offs between features and performance",
+      "Show awareness of India's diverse connectivity landscape",
+      "Demonstrate understanding of food delivery business model"
+    ],
+    "commonMistakes": [
+      "Ignoring mobile-first design principles",
+      "Over-engineering solutions without considering network constraints",
+      "Not asking about business context and user constraints",
+      "Focusing on latest tech instead of proven, stable solutions"
+    ]
+  },
+
+  "salaryBands": {
+    "disclaimer": "Salary ranges are approximate and vary based on experience, negotiation, and market conditions",
+    "roles": [
+      {
+        "level": "SDE-2",
+        "experience": "2-4 years",
+        "baseSalary": "₹18-28 LPA",
+        "totalCompensation": "₹22-35 LPA",
+        "notes": "Includes base + variable pay + ESOPs"
+      },
+      {
+        "level": "SDE-3",
+        "experience": "4-7 years",
+        "baseSalary": "₹28-40 LPA",
+        "totalCompensation": "₹35-55 LPA",
+        "notes": "Senior IC role with mentoring responsibilities"
+      },
+      {
+        "level": "Staff Engineer",
+        "experience": "7+ years",
+        "baseSalary": "₹40-60 LPA",
+        "totalCompensation": "₹55-80 LPA",
+        "notes": "Technical leadership, architecture decisions"
+      }
+    ]
+  }
+}

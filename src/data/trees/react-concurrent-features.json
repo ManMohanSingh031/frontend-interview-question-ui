@@ -1,0 +1,104 @@
+{
+  "id": "react-concurrent-features",
+  "root": "q1",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "Your React app becomes unresponsive for 2 seconds when users type in the search box because you're filtering 10,000 items. Should you use useMemo, useTransition, or useDeferredValue?",
+      "intent": "Test understanding of when concurrent features solve problems memoization can't",
+      "expectedSignal": "Suggests useTransition for the expensive filtering operation, explains that useMemo won't help with blocking updates",
+      "commonWrongAssumption": "Thinking useMemo solves all performance problems - it only prevents recalculation, not blocking",
+      "followUpIds": ["q2a", "q2b"]
+    },
+    {
+      "id": "q2a",
+      "question": "Good - useTransition. Show me the code. How do you handle the loading state during the transition?",
+      "intent": "Test practical implementation knowledge",
+      "expectedSignal": "Uses isPending from useTransition, wraps expensive update in startTransition, shows loading UI",
+      "commonWrongAssumption": "Not showing loading states during transitions, making users think app is broken",
+      "followUpIds": ["q3a", "q3b"]
+    },
+    {
+      "id": "q2b",
+      "question": "You said useDeferredValue - but the search input itself is lagging. Explain why deferring the search term won't fix input responsiveness.",
+      "intent": "Catch misunderstanding of when to use each concurrent feature",
+      "expectedSignal": "Corrects to useTransition, explains useDeferredValue defers values not updates, input needs immediate response",
+      "commonWrongAssumption": "Thinking useDeferredValue makes everything faster - it only defers derived values",
+      "followUpIds": ["q3c"]
+    },
+    {
+      "id": "q3a",
+      "question": "Your useTransition works but now you want to show stale results during the search. How do you combine useTransition with useDeferredValue?",
+      "intent": "Test advanced concurrent patterns combination",
+      "expectedSignal": "Uses both hooks together - useTransition for updates, useDeferredValue for displaying stale data during transition",
+      "commonWrongAssumption": "Thinking you can only use one concurrent feature at a time",
+      "followUpIds": ["q4a"]
+    },
+    {
+      "id": "q3b",
+      "question": "useTransition is working. But React DevTools shows your component still re-rendering 50 times during the transition. Why?",
+      "intent": "Test understanding that concurrent rendering doesn't prevent re-renders, just makes them non-blocking",
+      "expectedSignal": "Explains concurrent rendering batches updates but doesn't eliminate re-renders, mentions time-slicing",
+      "commonWrongAssumption": "Thinking useTransition reduces re-render count - it only makes them interruptible",
+      "followUpIds": ["q4b"]
+    },
+    {
+      "id": "q3c",
+      "question": "Correct about useTransition. Now the search is fast, but users see a jarring jump from empty state to results. How would you smooth this?",
+      "intent": "Test understanding of useDeferredValue for smooth transitions",
+      "expectedSignal": "Uses useDeferredValue to show previous results until new ones are ready, explains visual continuity",
+      "commonWrongAssumption": "Using loading spinners for everything instead of showing stale data",
+      "followUpIds": ["q4c"]
+    },
+    {
+      "id": "q4a",
+      "question": "Good combination. But your designer wants the old results to fade out gradually. How does this interact with React's concurrent rendering?",
+      "intent": "Test understanding of how concurrent features work with CSS transitions",
+      "expectedSignal": "Explains that concurrent rendering respects CSS transitions, can use transition: opacity with deferred values",
+      "commonWrongAssumption": "Thinking concurrent rendering breaks CSS animations",
+      "followUpIds": ["q5a"]
+    },
+    {
+      "id": "q4b",
+      "question": "Right about time-slicing. When would you NOT use useTransition? Give me a specific example.",
+      "intent": "Test understanding of useTransition limitations and appropriate use cases",
+      "expectedSignal": "Mentions user inputs, focus management, immediate feedback scenarios - things that should never be deferred",
+      "commonWrongAssumption": "Wrapping every state update in useTransition thinking it's always better",
+      "followUpIds": ["q5b"]
+    },
+    {
+      "id": "q4c",
+      "question": "React DevTools Profiler shows your useTransition component rendering 127 times per second with 45ms average render time. This seems excessive. Walk me through your debugging approach.",
+      "intent": "Test hands-on debugging of concurrent rendering performance and understanding that transitions can still cause excessive re-renders",
+      "expectedSignal": "Uses React Profiler to track render frequency, identifies that useTransition doesn't reduce render count, debugs what's causing frequent state updates within transition",
+      "weakAnswer": "Blames useTransition or thinks it should prevent re-renders",
+      "strongAnswer": "Uses React DevTools Profiler timeline, identifies render frequency vs blocking time, debugs state update frequency within startTransition, optimizes update batching or reduces update frequency",
+      "followUpIds": ["q5c"]
+    },
+    {
+      "id": "q5c",
+      "question": "Production monitoring shows 3.1 second First Input Delay when users interact during your useTransition updates. Your investigation process?",
+      "intent": "Test understanding that concurrent features can still cause input delay and debugging production performance",
+      "expectedSignal": "Investigates transition priority vs input handling, uses Performance API to measure input delay, identifies that transition work is still blocking critical updates",
+      "weakAnswer": "Thinks useTransition should prevent input delay or removes it",
+      "strongAnswer": "Measures input delay correlation with transition timing, debugs transition work chunks, potentially breaks expensive work into smaller pieces or uses scheduler yielding patterns",
+      "followUpIds": ["q6c"]
+    },
+    {
+      "id": "q6c",
+      "question": "Chrome Performance tab shows your useDeferredValue computation consuming 200ms of main thread time per keystroke. This defeats the purpose. What's your debugging strategy?",
+      "intent": "Test debugging when concurrent features are used incorrectly - expensive computation should be optimized, not just deferred",
+      "expectedSignal": "Identifies that useDeferredValue doesn't make expensive computations cheap, debugs the actual expensive operation, optimizes the computation itself",
+      "weakAnswer": "Thinks useDeferredValue should make computations faster or adjusts delay timing",
+      "strongAnswer": "Profiles the expensive computation, identifies bottleneck in the actual operation (not deferring), optimizes algorithm/memoization/data structure, uses deferring only for UX smoothness",
+      "followUpIds": ["q7c"]
+    },
+    {
+      "id": "q7c",
+      "question": "Excellent systematic debugging! You understand both the tools and their proper application. This is exactly the production problem-solving we need.",
+      "intent": "Positive closure acknowledging debugging expertise and proper understanding of concurrent features",
+      "expectedSignal": "Professional acknowledgment of advanced React concurrent features debugging and performance optimization skills",
+      "followUpIds": []
+    }
+  ]
+}

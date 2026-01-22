@@ -133,6 +133,48 @@
         "trigger": "Senior-level practical discussion",
         "depth": 2
       }
+    },
+    {
+      "id": "profiler-debug",
+      "q": "React DevTools Profiler shows your useCallback component rendering 150 times with 65ms average. Walk me through your debugging process.",
+      "intent": "Test hands-on debugging with React DevTools and understanding of callback optimization failures",
+      "signal": "Uses Profiler timeline, checks 'why did this render', identifies callback recreation causes, measures actual impact",
+      "parent": "root",
+      "weakAnswer": "Just looks at code or guesses about dependencies",
+      "strongAnswer": "Opens React Profiler, uses render timeline, checks callback identity with console.log, identifies specific dependency causing recreation, measures performance impact",
+      "metadata": {
+        "difficulty": "hard",
+        "trigger": "Production debugging scenario",
+        "depth": 1
+      }
+    },
+    {
+      "id": "core-vitals-debug",
+      "q": "Production Core Web Vitals show 4.1s TTI correlated with your useCallback optimizations. Your investigation approach?",
+      "intent": "Test production performance debugging connecting React optimization to user metrics",
+      "signal": "Correlates TTI with React performance, uses Lighthouse + Profiler, identifies over-optimization issues, measures user impact",
+      "parent": "profiler-debug",
+      "weakAnswer": "Removes all useCallback or blames the metric",
+      "strongAnswer": "Uses Lighthouse to correlate TTI with main thread blocking, identifies memory pressure from closure retention, selectively removes problematic optimizations with measurement",
+      "metadata": {
+        "difficulty": "hard",
+        "trigger": "Real-world performance regression",
+        "depth": 2
+      }
+    },
+    {
+      "id": "impossible-scenario",
+      "q": "Chrome DevTools shows useCallback taking 120ms to execute per render. This should be instant. What's your debugging strategy?",
+      "intent": "Test debugging skills for impossible scenarios and React understanding",
+      "signal": "Identifies misconception - useCallback doesn't execute, investigates what's actually causing 120ms",
+      "parent": "core-vitals-debug",
+      "weakAnswer": "Accepts that useCallback is slow or tries to optimize the hook",
+      "strongAnswer": "Clarifies that useCallback only creates function reference, debugs expensive computation in dependency array or immediate callback invocation in render",
+      "metadata": {
+        "difficulty": "expert",
+        "trigger": "Misconception test",
+        "depth": 3
+      }
     }
   ],
   "topic": "react"

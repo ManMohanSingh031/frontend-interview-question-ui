@@ -16,7 +16,7 @@ export default function HomePage() {
           </h1>
           <p className="text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
             Structured learning paths with mindmaps, interactive demos, and company-specific playbooks
-            for fresher/SDE-1/SDE-2/SDE-3 frontend engineering roles.
+            for Fresher/SDE-1/SDE-2/SDE-3 frontend engineering roles.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/topics">
@@ -56,7 +56,7 @@ export default function HomePage() {
               <p className="text-gray-400 leading-relaxed">Structured knowledge graphs for complex frontend concepts</p>
             </Link>
 
-            <Link href="/tree/usecallback-tree" className="text-center group cursor-pointer">
+            <Link href="/tree/usecallback" className="text-center group cursor-pointer">
               <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary-500 to-accent-400 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -173,9 +173,10 @@ export default function HomePage() {
               <h4 className="font-semibold mb-4">Platform</h4>
               <ul className="space-y-2 text-gray-400">
                 <li><Link href="/topics" className="hover:text-white transition-colors">Topics</Link></li>
-                <li><Link href="/tree/usecallback-tree" className="hover:text-white transition-colors">Question Trees</Link></li>
+                <li><Link href="/tree/usecallback" className="hover:text-white transition-colors">Question Trees</Link></li>
                 <li><Link href="/demos/debounce-throttle" className="hover:text-white transition-colors">Interactive Demos</Link></li>
-                <li><Link href="/playbooks/rippling" className="hover:text-white transition-colors">Company Playbooks</Link></li>
+                <li><Link href="/playbooks/rippling" className="hover:text-white transition-colors">Rippling</Link></li>
+                <li><Link href="/playbooks/swiggy" className="hover:text-white transition-colors">Swiggy</Link></li>
               </ul>
             </div>
 

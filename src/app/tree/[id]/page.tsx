@@ -22,40 +22,59 @@ async function getTreeData(id: string) {
 
 // Transform flat tree structure to hierarchical
 function transformTreeData(data: any) {
+  // Handle both 'branches' and 'questions' data structures
+  const items = data.branches || data.questions;
+  if (!items) return null;
+
   const nodeMap = new Map();
 
   // Create node map
-  data.branches.forEach((branch: any) => {
-    nodeMap.set(branch.id, {
-      ...branch,
+  items.forEach((item: any) => {
+    nodeMap.set(item.id, {
+      ...item,
       children: []
     });
   });
 
-  // Find root and build hierarchy
-  const rootNode = nodeMap.get("root");
+  // Find root node
+  const rootId = data.root || "root" || "q1";
+  let rootNode = nodeMap.get(rootId);
+
+  // If no explicit root found, try common root patterns
+  if (!rootNode) {
+    rootNode = nodeMap.get("root") || nodeMap.get("q1") || items[0];
+  }
+
   if (!rootNode) return null;
 
   // Connect children to parents
-  data.branches.forEach((branch: any) => {
-    if (branch.parent && branch.parent !== "root") {
-      const parent = nodeMap.get(branch.parent);
+  items.forEach((item: any) => {
+    if (item.parent && item.parent !== rootId) {
+      const parent = nodeMap.get(item.parent);
       if (parent) {
-        parent.children.push(nodeMap.get(branch.id));
+        parent.children.push(nodeMap.get(item.id));
       }
-    } else if (branch.parent === "root") {
-      rootNode.children.push(nodeMap.get(branch.id));
+    } else if (item.parent === rootId) {
+      rootNode.children.push(nodeMap.get(item.id));
+    } else if (item.followUpIds && item.followUpIds.length > 0) {
+      // Handle followUpIds structure (for question-based trees)
+      item.followUpIds.forEach((followUpId: string) => {
+        const followUp = nodeMap.get(followUpId);
+        if (followUp) {
+          rootNode.children.push(followUp);
+        }
+      });
     }
   });
 
   return {
-    title: data.title,
-    description: data.summary,
+    title: data.title || `${data.id} Question Tree`,
+    description: data.summary || "Interactive interview question tree",
     root: {
       id: rootNode.id,
-      question: rootNode.q,
+      question: rootNode.q || rootNode.question,
       intent: rootNode.intent,
-      expectedSignal: rootNode.signal,
+      expectedSignal: rootNode.signal || rootNode.expectedSignal,
       type: "root" as const,
       children: rootNode.children.map((child: any) => transformNode(child)),
       metadata: rootNode.metadata
@@ -66,9 +85,9 @@ function transformTreeData(data: any) {
 function transformNode(node: any): any {
   return {
     id: node.id,
-    question: node.q,
+    question: node.q || node.question,
     intent: node.intent,
-    expectedSignal: node.signal,
+    expectedSignal: node.signal || node.expectedSignal,
     type: node.children && node.children.length > 0 ? "branch" : "leaf",
     children: node.children ? node.children.map(transformNode) : undefined,
     metadata: node.metadata
@@ -273,9 +292,8 @@ export default async function TreePage({ params }: TreePageProps) {
 
 export function generateStaticParams() {
   return [
-    { id: 'usecallback-tree' },
-    { id: 'closures-tree' },
-    { id: 'state-management' },
-    { id: 'perf-optimization' },
+    { id: 'usecallback' },
+    { id: 'usememo-vs-usecallback' },
+    { id: 'react-concurrent-features' },
   ];
 }

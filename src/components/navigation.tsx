@@ -31,7 +31,7 @@ export function Navigation() {
               Topics
             </Link>
             <Link
-              href="/tree/usecallback-tree"
+              href="/tree/usecallback"
               className={`text-sm font-medium transition-colors ${
                 isActive("/tree")
                   ? "text-white"

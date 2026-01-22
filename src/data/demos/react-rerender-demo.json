@@ -1,0 +1,50 @@
+{
+  "id": "react-rerender-demo",
+  "title": "React Re-render Behavior",
+  "description": "Interactive demonstration showing when and why React components re-render, with visual counters and optimization examples.",
+  "difficulty": "intermediate",
+  "category": "React",
+  "estimatedTime": "5-10 minutes",
+  "keyLearnings": [
+    "Understanding React re-render triggers",
+    "Impact of reference equality on performance",
+    "When to use useMemo, useCallback, and React.memo",
+    "Visual debugging of component render cycles"
+  ],
+  "interviewTopics": [
+    "React performance optimization",
+    "useMemo vs useCallback practical usage",
+    "React.memo and when it helps",
+    "Reference equality and Object.is behavior",
+    "Component lifecycle and render optimization"
+  ],
+  "codeExample": {
+    "language": "jsx",
+    "code": "// Unoptimized - creates new references every render\nconst MyComponent = () => {\n  const [count, setCount] = useState(0);\n  \n  return (\n    <ChildComponent \n      onClick={() => console.log('clicked')} // New function!\n      user={{ name: 'John' }}              // New object!\n      style={{ color: 'blue' }}            // New object!\n    />\n  );\n};\n\n// Optimized - stable references\nconst OptimizedComponent = () => {\n  const [count, setCount] = useState(0);\n  \n  const handleClick = useCallback(() => {\n    console.log('clicked');\n  }, []);\n  \n  const user = useMemo(() => ({ name: 'John' }), []);\n  const style = useMemo(() => ({ color: 'blue' }), []);\n  \n  return (\n    <MemoizedChild \n      onClick={handleClick}\n      user={user}\n      style={style}\n    />\n  );\n};\n\nconst MemoizedChild = React.memo(ChildComponent);"
+  },
+  "explanation": {
+    "concept": "React re-renders components when state changes, props change, or parent components re-render. Understanding what triggers re-renders and how to optimize them is crucial for building performant applications.",
+    "whyImportant": "In real applications, unnecessary re-renders can cause performance issues. Senior developers need to understand when optimization is needed and how to implement it correctly.",
+    "commonMistakes": [
+      "Using inline functions and objects as props without memoization",
+      "Overusing useMemo/useCallback for simple values",
+      "Not using React.memo when useCallback would benefit",
+      "Missing dependencies in useMemo/useCallback arrays",
+      "Optimizing before measuring actual performance impact"
+    ]
+  },
+  "practiceQuestions": [
+    "Open React DevTools Profiler. Show me exactly how you'd identify which props are causing this component to re-render 40 times per second in production.",
+    "Your main thread blocks for 200ms during state updates. Demonstrate useTransition vs useMemo - which fixes this and why?",
+    "This demo shows concurrent rendering. Explain why the component still re-renders multiple times even with useTransition - what's React actually doing?",
+    "Profile shows useMemo computation taking 50ms but still running every render. Show me your debugging workflow using DevTools.",
+    "Compare this demo's useDeferredValue with useMemo for search filtering - when would each approach fail in production?"
+  ],
+  "relatedConcepts": [
+    "React reconciliation algorithm",
+    "Virtual DOM diffing",
+    "React Profiler usage",
+    "Component composition patterns",
+    "Performance measurement techniques"
+  ]
+}

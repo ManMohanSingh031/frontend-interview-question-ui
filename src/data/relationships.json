@@ -1,0 +1,66 @@
+[
+  {
+    "id": "react-rendering",
+    "type": "mindmap",
+    "relatedMindmaps": ["browser-rendering-pipeline"],
+    "relatedTrees": ["usecallback-tree", "usememo-vs-usecallback"],
+    "relatedDemos": ["react-rerender-demo"],
+    "relatedPlaybooks": ["swiggy", "rippling"]
+  },
+  {
+    "id": "browser-rendering-pipeline",
+    "type": "mindmap",
+    "relatedMindmaps": ["react-rendering"],
+    "relatedTrees": ["usememo-vs-usecallback"],
+    "relatedDemos": ["react-rerender-demo"],
+    "relatedPlaybooks": ["swiggy"]
+  },
+  {
+    "id": "usecallback-tree",
+    "type": "tree",
+    "relatedMindmaps": ["react-rendering"],
+    "relatedTrees": ["usememo-vs-usecallback"],
+    "relatedDemos": ["react-rerender-demo"],
+    "relatedPlaybooks": ["rippling", "swiggy"]
+  },
+  {
+    "id": "usememo-vs-usecallback",
+    "type": "tree",
+    "relatedMindmaps": ["react-rendering", "browser-rendering-pipeline"],
+    "relatedTrees": ["usecallback-tree"],
+    "relatedDemos": ["react-rerender-demo", "debounce-throttle"],
+    "relatedPlaybooks": ["rippling", "swiggy"]
+  },
+  {
+    "id": "debounce-throttle",
+    "type": "demo",
+    "relatedMindmaps": ["browser-rendering-pipeline"],
+    "relatedTrees": ["usememo-vs-usecallback"],
+    "relatedDemos": ["react-rerender-demo"],
+    "relatedPlaybooks": ["swiggy", "rippling"]
+  },
+  {
+    "id": "react-rerender-demo",
+    "type": "demo",
+    "relatedMindmaps": ["react-rendering", "browser-rendering-pipeline"],
+    "relatedTrees": ["usecallback-tree", "usememo-vs-usecallback"],
+    "relatedDemos": ["debounce-throttle"],
+    "relatedPlaybooks": ["rippling", "swiggy"]
+  },
+  {
+    "id": "rippling",
+    "type": "playbook",
+    "relatedMindmaps": ["react-rendering"],
+    "relatedTrees": ["usecallback-tree", "usememo-vs-usecallback"],
+    "relatedDemos": ["react-rerender-demo", "debounce-throttle"],
+    "relatedPlaybooks": ["swiggy"]
+  },
+  {
+    "id": "swiggy",
+    "type": "playbook",
+    "relatedMindmaps": ["react-rendering", "browser-rendering-pipeline"],
+    "relatedTrees": ["usememo-vs-usecallback", "usecallback-tree"],
+    "relatedDemos": ["react-rerender-demo", "debounce-throttle"],
+    "relatedPlaybooks": ["rippling"]
+  }
+]

@@ -31,7 +31,7 @@ export function MindmapViewer({
 
   const renderConnections = () => {
     return data.nodes.map(node =>
-      node.connections.map(targetId => {
+      (node.connections || []).map(targetId => {
         const target = data.nodes.find(n => n.id === targetId);
         if (!target) return null;
 
