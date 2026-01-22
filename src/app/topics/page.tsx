@@ -36,7 +36,7 @@ export default function TopicsPage() {
       title: "Performance",
       description: "Optimization techniques, Core Web Vitals, and scalability patterns",
       icon: "⚡",
-      color: "green",
+      color: "orange",
       items: 12,
       difficulty: "advanced" as const,
     },

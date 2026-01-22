@@ -23,7 +23,7 @@ async function getDemoData(id: string) {
   }
 }
 
-// Demo components registry
+// Demo components registry - using dynamic imports for better performance
 const demoComponents: Record<string, React.ComponentType> = {
   "debounce-throttle": DebounceThrottleDemo,
 };
@@ -35,7 +35,13 @@ export default async function DemoPage({ params }: DemoPageProps) {
     notFound();
   }
 
-  const DemoComponent = demoComponents[params.id];
+  // Handle dynamic imports for demo components
+  let DemoComponent = demoComponents[params.id];
+
+  if (!DemoComponent && params.id === "react-rerender-demo") {
+    const { ReactRerenderDemo } = await import("@/components/demos/react-rerender-demo");
+    DemoComponent = ReactRerenderDemo;
+  }
 
   if (!DemoComponent) {
     notFound();
@@ -89,7 +95,7 @@ export default async function DemoPage({ params }: DemoPageProps) {
           <div className="bg-dark-900 border border-gray-800 rounded-xl p-6 mb-8">
             <h2 className="text-lg font-semibold mb-3 text-accent-400">Core Concept</h2>
             <p className="text-gray-300 leading-relaxed">
-              {demoData.concept}
+              {demoData.concept || demoData.explanation?.concept || 'Interactive demonstration of key concepts.'}
             </p>
           </div>
         </header>
@@ -108,15 +114,41 @@ export default async function DemoPage({ params }: DemoPageProps) {
 
           <div className="bg-dark-900 border border-gray-800 rounded-xl p-8">
             <div className="prose prose-invert max-w-none">
-              <div
-                className="text-gray-300 leading-relaxed space-y-4"
-                dangerouslySetInnerHTML={{
-                  __html: demoData.explanation.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
-                    .replace(/\n\n/g, '</p><p>')
-                    .replace(/^/, '<p>')
-                    .replace(/$/, '</p>')
-                }}
-              />
+              <div className="text-gray-300 leading-relaxed space-y-4">
+                {typeof demoData.explanation === 'string' ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: demoData.explanation.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+                        .replace(/\n\n/g, '</p><p>')
+                        .replace(/^/, '<p>')
+                        .replace(/$/, '</p>')
+                    }}
+                  />
+                ) : (
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-3">Core Concept</h3>
+                      <p>{demoData.explanation.concept}</p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-3">Why It Matters</h3>
+                      <p>{demoData.explanation.whyImportant}</p>
+                    </div>
+
+                    {demoData.explanation.commonMistakes && (
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes</h3>
+                        <ul className="list-disc list-inside space-y-2 text-gray-300">
+                          {demoData.explanation.commonMistakes.map((mistake: string, index: number) => (
+                            <li key={index}>{mistake}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </section>
@@ -133,7 +165,7 @@ export default async function DemoPage({ params }: DemoPageProps) {
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-gray-400">React Implementation</span>
                 <CopyButton
-                  textToCopy={demoData.implementation}
+                  textToCopy={demoData.implementation || demoData.codeExample?.code || 'No code available'}
                   className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
                 >
                   Copy Code
@@ -142,7 +174,7 @@ export default async function DemoPage({ params }: DemoPageProps) {
             </div>
             <div className="p-6 overflow-x-auto">
               <pre className="text-sm text-gray-300">
-                <code>{demoData.implementation}</code>
+                <code>{demoData.implementation || demoData.codeExample?.code || 'No code available for this demo.'}</code>
               </pre>
             </div>
           </div>
@@ -198,7 +230,7 @@ export default async function DemoPage({ params }: DemoPageProps) {
           </h2>
 
           <div className="flex flex-wrap gap-3">
-            {demoData.relatedTopics.map((topic: string) => (
+            {(demoData.relatedTopics || demoData.relatedConcepts || []).map((topic: string) => (
               <span
                 key={topic}
                 className="px-4 py-2 bg-dark-800 border border-gray-700 rounded-lg text-gray-300 text-sm hover:border-gray-600 transition-colors"
@@ -274,7 +306,7 @@ export default async function DemoPage({ params }: DemoPageProps) {
               <p className="text-gray-400 text-sm mt-2">Dive deeper into JavaScript concepts</p>
             </Link>
 
-            <Link href="/tree/usecallback-tree" className="bg-dark-800 rounded-xl p-6 border border-gray-700 hover:border-accent-500 transition-all duration-300 group">
+            <Link href="/tree/usecallback" className="bg-dark-800 rounded-xl p-6 border border-gray-700 hover:border-accent-500 transition-all duration-300 group">
               <div className="flex items-center mb-3">
                 <div className="w-8 h-8 bg-accent-500 rounded-lg flex items-center justify-center mr-3">
                   <span className="text-white text-sm font-semibold">T</span>
@@ -309,9 +341,6 @@ export default async function DemoPage({ params }: DemoPageProps) {
 export function generateStaticParams() {
   return [
     { id: 'debounce-throttle' },
-    { id: 'hook-optimization' },
-    { id: 'async-demo' },
-    { id: 'performance-profiling' },
-    { id: 'paint-demo' },
+    { id: 'react-rerender-demo' },
   ];
 }
